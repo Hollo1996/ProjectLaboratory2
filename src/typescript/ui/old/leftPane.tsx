@@ -1,12 +1,14 @@
 import { Component } from "react";
-import { ConversationDto } from "../../model/chat";
+//import { ConversationDto } from "../../model/chat";
 import React from "react";
 import { TextInputAndButton } from "./textInputAndButton";
 import { proxy } from "../../network/proxy";
 import { ConversationCard } from "./conversationCard";
-import { InboxDto } from "../../network/data/inboxDto";
+//import { InboxDto } from "../../network/data/inboxDto";
 
-export class LeftPane extends Component<{
+export class LeftPane extends Component {}
+
+/*<{
     inbox: InboxDto, selectedConversation: ConversationDto | undefined,
     onSelect: (c: ConversationDto) => void
 }>
@@ -42,4 +44,4 @@ export class LeftPane extends Component<{
             </div>
         );
     }
-}
+}*/

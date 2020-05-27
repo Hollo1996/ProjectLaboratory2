@@ -1,10 +1,10 @@
-import { ConversationDto } from "../../model/chat";
+//import { ConversationDto } from "../../model/chat";
 import React, { Component } from "react";
 import { proxy } from "../../network/proxy";
 import { RightPane } from "./rightPane";
 import { LeftPane } from "./leftPane";
 
-export class Main extends Component {
+export class Main extends Component {/*
     state = { selectedConversation: undefined as (ConversationDto | undefined) };
 
     render() {
@@ -19,5 +19,5 @@ export class Main extends Component {
                     onBack={() => this.setState({ selectedConversation: undefined })} />
             </div>
         );
-    }
+    }*/
 }

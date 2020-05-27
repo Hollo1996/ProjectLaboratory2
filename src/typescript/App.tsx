@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Login } from './ui/auth/login';
 import { proxy } from './network/proxy';
 import { Main } from './ui/old/main';
+import { ModelHandlerView } from './ui/handler/modelHandlerView';
 
 export default class App extends Component {
 
@@ -13,7 +14,7 @@ export default class App extends Component {
   render() {
     return (
       <div className="app">
-        { this.state.showLogin ? <Login /> : <Main /> }
+        { this.state.showLogin ? <Login /> : <ModelHandlerView /> }
       </div>
     );
   }

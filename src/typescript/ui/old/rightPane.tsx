@@ -1,12 +1,14 @@
+
 import { proxy } from "../../network/proxy";
 import { Component } from "react";
-import { ConversationDto } from "../../model/chat";
+//import { ConversationDto } from "../../model/chat";
 import React from "react";
 import { TextInputAndButton } from "./textInputAndButton";
 import { MessageCard } from "./messageCard";
 import '../../../css/index.css';
 
-export class RightPane extends Component<{
+export class RightPane extends Component{}
+/*<{
     conversation?: ConversationDto, onBack: () => void
 }> {
     componentDidMount() {
@@ -53,3 +55,4 @@ export class RightPane extends Component<{
         );
     }
 }
+*/

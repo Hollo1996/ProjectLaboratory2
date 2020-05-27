@@ -1,3 +1,4 @@
+/*
 export interface MessageDto {
     id: number;
     timeStamp: string;
@@ -7,12 +8,6 @@ export interface MessageDto {
     content: string;
 }
 
-export interface UserDto {
-    id: string;
-    displayName: string;
-    tag: string;
-    lastSeen: string;
-}
 
 export interface ConversationDto {
     channelId: string;
@@ -27,6 +22,7 @@ export interface ConversationDto {
     memberIds: string[];
     lastMessages: MessageDto[];
 }
+*/
 
 
 

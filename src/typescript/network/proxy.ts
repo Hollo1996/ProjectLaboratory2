@@ -1,6 +1,6 @@
 import { EventProducer } from "./eventProducer";
 import { ProxyEventMap } from "./proxyEventMap";
-import { InboxDto } from "./data/inboxDto";
+//import { InboxDto } from "./data/inboxDto";
 import { IncomingPacket } from "./data/incomingPacket";
 import { OutgoingPacket } from "./data/outgoingPacket";
 import { MockWebSocket } from "./mock/mockWebSocket";
@@ -9,7 +9,7 @@ class Proxy extends EventProducer<ProxyEventMap>
 {
     //mock websocket
     private ws: MockWebSocket;
-    inbox: InboxDto | null = null;
+    //inbox: InboxDto | null = null;
 
     constructor() {
         super();
@@ -24,18 +24,18 @@ class Proxy extends EventProducer<ProxyEventMap>
                     alert(p.message);
                     break;
                 case "login":
-                    this.inbox = p.inbox;
+                    //this.inbox = p.inbox;
                     this.dispatch("login");
                     break;
-                case "message":
+                /*case "message":
                     let cid = p.channelId;
                     this.inbox!.conversations.find(x => x.channelId === cid)?.lastMessages.push(p.message);
                     this.dispatch("message", cid, p.message);
-                    break;
-                case "conversationAdded":
+                    break;*/
+                /*case "conversationAdded":
                     this.inbox!.conversations.push(p.conversation);
                     this.dispatch("conversation", p.conversation.channelId);
-                    break;
+                    break;*/
             }
         },this);
     }

@@ -1,4 +1,3 @@
-import { MessageDto } from "../../model/chat";
 
 export interface MockWebSocketEventMap
 {

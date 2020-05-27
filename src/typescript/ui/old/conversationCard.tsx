@@ -1,9 +1,11 @@
 import { Component } from "react";
-import { ConversationDto } from "../../model/chat";
+//import { ConversationDto } from "../../model/chat";
 import React from "react";
 import { proxy } from "../../network/proxy";
 
-export class ConversationCard extends Component<{
+export class ConversationCard extends Component {}
+
+/*<{
     conversation: ConversationDto,
     selected: boolean,
     onSelect: () => void
@@ -37,4 +39,4 @@ export class ConversationCard extends Component<{
             </div>
         );
     }
-}
+}*/

@@ -1,8 +1,9 @@
 import { PureComponent } from "react";
-import { MessageDto } from "../../model/chat";
+//import { MessageDto } from "../../model/chat";
 import React from "react";
 
-export class MessageCard extends PureComponent<{ message: MessageDto, own: boolean }>
+export class MessageCard extends PureComponent{}
+/*<{ message: MessageDto, own: boolean }>
 {
     render() {
         return (
@@ -16,4 +17,4 @@ export class MessageCard extends PureComponent<{ message: MessageDto, own: boole
             </div>
         );
     }
-}
+}*/
