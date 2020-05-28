@@ -40,7 +40,7 @@ class Proxy extends EventProducer<ProxyEventMap>
                     this.dispatch("modelRemoved",p.modelId);
                     break;
                 case "modelDetail":
-                    this.dispatch("modelDetail",p.models);
+                    this.dispatch("modelDetail",p.model);
                     break;
                 case "entityAdded":
                     this.dispatch("entityAdded",p.entity);
@@ -49,7 +49,7 @@ class Proxy extends EventProducer<ProxyEventMap>
                     this.dispatch("entityUpdated",p.entity);
                     break;
                 case "entityRemoved":
-                    this.dispatch("entityRemoved",p.entityID);
+                    this.dispatch("entityRemoved",p.entityId);
                     break;
             }
         },this);

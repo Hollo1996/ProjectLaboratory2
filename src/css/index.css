@@ -11,8 +11,9 @@ html, body, div {
   }
   body {
   font-family: 'Segoe UI', sans-serif;
-  font-size: 16px;
+  font-size: 24px;
   line-height: 1.5;
+  background: rgba(255, 100, 100, 255);
   }
   input, button {
   font-family: inherit;
@@ -23,7 +24,9 @@ html, body, div {
   margin: 0 0 6px 0;
   }
   input {
-  padding: 4px 6px;
+  padding: 10px 30px 10px 6px;
+  background: rgba(255, 200, 200, 255);
+  border-radius:20px;
   }
   button {
   padding: 6px 12px;
@@ -32,6 +35,19 @@ html, body, div {
   font-weight: 600;
   border: none;
   border-radius: 2px;
+  }
+  button.long{
+    width: 100%;
+    border-radius: 50px;
+    background: rgba(255, 100, 0, 255);
+  }
+  button.round{
+    width: 25px;
+    height: 25px;
+    padding:0;
+    margin:0 0 0 15px;
+    border-radius: 50%;
+    background: rgba(255, 100, 0, 255);
   }
   button:hover {
   background-color: #00BBE0;

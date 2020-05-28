@@ -398,7 +398,7 @@ export class MockWebSocket extends EventProducer<MockWebSocketEventMap>{
         this.idCounter+=1
         this.users.push(user)
 
-        this.models[user.id]
+        this.models[user.id]=[];
 
         this.sendPacket({
             type:"user",

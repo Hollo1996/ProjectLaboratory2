@@ -10,7 +10,7 @@ export class Login extends Component {
     render() {
         return (
             <div className="login">
-                <p>{this.state.register ? "Switch back to " : "Have no account yet? Go and "}
+                <b><p>{this.state.register ? "Switch back to " : "Have no account yet? Go and "}
                     <a href="" onClick={e => {
                         e.preventDefault();
                         this.setState(state => ({ register: !this.state.register }));
@@ -18,7 +18,7 @@ export class Login extends Component {
                     }}>
                         {this.state.register ? "Login" : "Register"}
                     </a>
-                </p>
+                </p></b>
 
                 <img src="logo512.png" width="256" />
                 {this.state.register &&
@@ -48,11 +48,11 @@ export class Login extends Component {
                     onEnter={() => this.onClick()}
                     autofocus={true}
                 />
-                <button type="button" onClick={() => this.onClick()}>
+                <button className="long" type="button" onClick={() => this.onClick()}>
                     {this.state.register ? "Register" : "Login"}
                 </button>
 
-                <a href="https://www.google.hu/search?q=privacy">Privacy Policy</a>
+                <b><a href="https://www.google.hu/search?q=privacy">Privacy Policy</a></b>
             </div>);
     }
 
