@@ -45,7 +45,7 @@ export class ModelHandlerView extends Component<{},{}>{
                     <tr><td>
                     <b>Welcome</b>
                     <input 
-                            onInput={this.onUserNameChange} 
+                            onChange={e=>this.onUserNameChange(e.target.value)} 
                             placeholder="userName"
                             size={this.state.userNameSize} 
                             />
@@ -73,8 +73,8 @@ export class ModelHandlerView extends Component<{},{}>{
         )
     }
 
-    onUserNameChange(e){
-        this.state.userNameSize=e.target.value.size;
+    onUserNameChange(e:string){
+        this.setState({userNameSize:e.length})
     }
 
     onAdd(e){

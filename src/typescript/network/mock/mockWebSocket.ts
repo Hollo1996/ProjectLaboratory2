@@ -193,6 +193,8 @@ export class MockWebSocket extends EventProducer<MockWebSocketEventMap>{
                 }
             }
 
+            this.models[user.id].push(model)
+
             this.idCounter+=7
 
             this.sendPacket({
@@ -205,7 +207,7 @@ export class MockWebSocket extends EventProducer<MockWebSocketEventMap>{
         let user = this.token2logedInUser(token)
         if(user){
             let models = this.models[user.id];
-            let oldModel:Model=models.find(item=>item.id==model.id);
+            let oldModel=models.find(item=>item.id==model.id);
             if(!oldModel){
                 this.sendPacket({
                     type:"error",
