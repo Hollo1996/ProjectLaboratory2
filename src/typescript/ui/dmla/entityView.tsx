@@ -4,6 +4,7 @@ import React from "react";
 import { Entity } from "../../model/data/dmla/Entity";
 import { proxy } from "../../network/proxy";
 import { Slot } from "../../model/data/dmla/Slot";
+import  '../../../css/model.css';
 
 export class EntityView extends Component<{entity:Entity},{}>{
 
@@ -62,7 +63,7 @@ export class EntityView extends Component<{entity:Entity},{}>{
     superChange(e){
         this.setState({entity: {super: e.target.value},superSize: e.target.value.size})
     }
-    
+
     onBlur(e){
         proxy.sendPacket({
             type:"updateEntityRequest",

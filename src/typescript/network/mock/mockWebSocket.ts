@@ -286,7 +286,7 @@ export class MockWebSocket extends EventProducer<MockWebSocketEventMap>{
     findNodeByEntityId(entityId: number, nodes: TreeNode[]){
         let nodeResult :TreeNode|undefined;
         nodes.forEach( node=>{
-            if(node.data.id===entityId){
+            if(node.entity.id===entityId){
                 nodeResult = node;
             }
             else{
@@ -318,11 +318,11 @@ export class MockWebSocket extends EventProducer<MockWebSocketEventMap>{
                 else{
                     let newNode={
                         id:this.idCounter+1,
-                        data:{
+                        entity:{
                             id:this.idCounter+2,
                             name:"",
                             superId:superId,
-                            super:node.data.name,
+                            super:node.entity.name,
                             slots:[]
                         },
                         children:[]
@@ -334,7 +334,7 @@ export class MockWebSocket extends EventProducer<MockWebSocketEventMap>{
 
                     this.sendPacket({
                         type:"entityAdded",
-                        entity:newNode.data
+                        entity:newNode.entity
                     })
                 }
             }
@@ -360,7 +360,7 @@ export class MockWebSocket extends EventProducer<MockWebSocketEventMap>{
                     })
                 }
                 else{
-                    node.data=entity
+                    node.entity=entity
 
                     this.sendPacket({
                         type:"entityAdded",

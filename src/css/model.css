@@ -1,0 +1,84 @@
+table,div{
+    border-collapse: collapse;
+    margin:0;
+    padding:0;
+  }
+  tr,td{
+    height: 100%;
+    margin:0;
+    padding:0;
+  }
+  table#entity td:nth-child(4){
+      width:100%;
+  }
+  table#slot td.middlebackground{
+      border-top: 1px solid rgba(255, 100, 100, 63);
+  }
+  table#constrait td.middlebackground{
+      border-top: 1px solid rgba(255, 100, 100, 63);
+  }
+  table#constrait td.startbackground{
+      border-top: 1px solid rgba(255, 100, 100, 63);
+  }
+  
+  input{
+    border: none;
+    background: rgba(255, 200, 200, 0);
+  }
+  
+  button{
+    padding: 0px;
+    background: rgba(255, 100, 0, 255);
+  }
+  .btn{
+    height: 25px;
+    width: 25px;
+    border-radius: 50%;
+  }
+  .btnlong{
+    height: 25px;
+    width: 100%;
+    border-radius: 50px;
+  }
+  .btntall{
+    height: 100%;
+    width: 25px;
+    border-radius: 50px 0 0 50px;
+  }
+  .btnstart{
+    background: rgba(255, 200, 200, 255);
+    border-radius: 50px 0 0 50px;
+  }
+  .btnend{
+    background: rgba(255, 200, 200, 255);
+    border-radius: 0 50px 50px 0;
+  }
+  
+  .input {
+    background: rgba(255, 200, 200, 255);
+  }
+  .inputstart {
+    background: rgba(255, 200, 200, 255);
+    border-radius: 0 50px 50px 0;
+    padding:3px
+  }
+  .inputplain {
+    background: rgba(0, 0, 0, 0);
+  }
+  .inputround {
+    background: rgba(255, 200, 200, 255);
+    border-radius: 50px;
+    padding: 3px 10px 3px 10px;
+  }
+  
+  .startbackground{
+    background: rgba(255, 150, 150, 255);
+    border-radius: 50px 0 0 50px;
+  }
+  .middlebackground{
+    background: rgba(255, 150, 150, 255);
+  }
+  .endbackground{
+    background: rgba(255, 150, 150, 255);
+    border-radius: 0 50px 50px 0;
+  }

@@ -5,6 +5,7 @@ import { Main } from './ui/old/main';
 import { ModelHandlerView } from './ui/handler/modelHandlerView';
 import { ModelView } from './ui/dmla/modelView';
 import { Model } from './model/data/dmla/Model';
+import '../css/index.css';
 
 export default class App extends Component {
 

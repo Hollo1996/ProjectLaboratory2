@@ -3,6 +3,7 @@ import { render } from "@testing-library/react";
 import React from "react";
 import { TreeNode } from "../../model/data/dmla/TreeNode";
 import { EntityView } from "./entityView";
+import  '../../../css/model.css';
 
 export class TreeNodeView extends Component<{treeNode:TreeNode},{}>
 {
@@ -12,7 +13,7 @@ export class TreeNodeView extends Component<{treeNode:TreeNode},{}>
             <table id="fa">
                 <tr>
                     <td>
-                        <EntityView entity={this.state.treeNode.data}/>
+                        <EntityView entity={this.state.treeNode.entity}/>
                     </td>
                 </tr>
                 <tr>

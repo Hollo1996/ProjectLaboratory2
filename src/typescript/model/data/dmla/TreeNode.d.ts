@@ -1,5 +1,5 @@
 export interface TreeNode {
     id:number;
-    data:Entity;
+    entity:Entity;
     children:TreeNode[];
 }

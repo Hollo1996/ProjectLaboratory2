@@ -2,13 +2,12 @@ import { Component } from "react";
 import { ConstraitView } from "./constraitView";
 import React from "react";
 import { Slot } from "../../model/data/dmla/Slot";
-import { proxy } from "../../network/proxy";
 import { EntityView } from "./entityView";
 import { Constrait } from "../../model/data/dmla/Constrait";
 import { Type } from "../../model/data/dmla/constrait/Type";
 import { Cardinality } from "../../model/data/dmla/constrait/Cardinality";
 import { OperationSignature } from "../../model/data/dmla/constrait/OperationSigniture";
-import { SSL_OP_ALLOW_UNSAFE_LEGACY_RENEGOTIATION } from "constants";
+import  '../../../css/model.css';
 
 export class SlotView extends Component<{owner:EntityView,slot:Slot},{}>{
     state = {

@@ -2,6 +2,7 @@ import { Component } from "react";
 import React from "react";
 import { SlotView } from "./slotView";
 import { Constrait } from "../../model/data/dmla/Constrait";
+import  '../../../css/model.css';
 
 export class ConstraitView extends Component<{constrait:Constrait,owner:SlotView},{}>{
     state = {
