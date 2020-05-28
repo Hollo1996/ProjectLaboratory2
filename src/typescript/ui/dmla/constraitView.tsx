@@ -1,8 +1,13 @@
 import { Component } from "react";
 import React from "react";
+import { SlotView } from "./slotView";
+import { Constrait } from "../../model/data/dmla/Constrait";
 
-export class ConstraitView extends Component{
-    state = {type: "", cardinality: "", typeSize: 4, cardinalitySize: 11};
+export class ConstraitView extends Component<{constrait:Constrait,owner:SlotView},{}>{
+    state = {
+        constrait: this.props.constrait, 
+        typeSize: this.props.constrait.type? this.props.constrait.type.length : 4, 
+        valueSize: this.props.constrait.value? this.props.constrait.value.length : 5};
 
     render() {
         return (
@@ -12,13 +17,13 @@ export class ConstraitView extends Component{
                         <input onInput={this.typeChange}
                             placeholder= "type"
                             size={this.state.typeSize}
-                            value= {this.state.type} />
+                            value= {this.state.constrait.type} />
                     </div></td>
                     <td className="middlebackground">
-                        <input onInput={this.typeChange}
-                            placeholder="cardinality"
-                            size={this.state.cardinalitySize} 
-                            value= {this.state.cardinality} />
+                        <input onInput={this.valueChange}
+                            placeholder="value"
+                            size={this.state.valueSize} 
+                            value= {this.state.constrait.value} />
                     </td>
                     <td className="endbackground">
                         <button className="btn">
@@ -38,10 +43,14 @@ export class ConstraitView extends Component{
     }
     
     typeChange(e){
-        this.setState({typeSize : e.value.size})   
+        this.setState({typeSize : e.target.value.size})   
     }
 
-    cardinalityChange(e){
-        this.setState({cardinalitySize : e.value.size})        
+    valueChange(e){
+        this.setState({valueSize : e.target.value.size})        
+    }
+
+    onBlure(){
+        this.props.owner.setConstrait(this.state.constrait)
     }
 }

@@ -1,4 +1,5 @@
 export interface Constrait {
     id: number;
-    timeStamp: string;
+    type: string;
+    value: string;
 }

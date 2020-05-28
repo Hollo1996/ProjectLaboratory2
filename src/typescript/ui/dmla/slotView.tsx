@@ -1,102 +1,146 @@
 import { Component } from "react";
 import { ConstraitView } from "./constraitView";
+import React from "react";
+import { Slot } from "../../model/data/dmla/Slot";
+import { EntityView } from "./entityView";
+import { Constrait } from "../../model/data/dmla/Constrait";
+import { Type } from "../../model/data/dmla/constrait/Type";
+import { Cardinality } from "../../model/data/dmla/constrait/Cardinality";
+import { OperationSignature } from "../../model/data/dmla/constrait/OperationSigniture";
 
-export class SlotView extends Component{
-    state={name:"", type:"", super:"", cardinality:"", opened:false};
-
+export class SlotView extends Component<{owner:EntityView,slot:Slot},{}>{
+    state = {
+        slot: this.props.slot, 
+        typeSize: 4, 
+        cardinalitySize: 11,
+        nameSize:4, 
+        superSize:4
+    };
     render(){
         return(
-            
-            <table id="slot">
-            <tr>
-                <td class="btntall" rowspan="2">
-                    <button class="btntall">
-                        <i class="fa fa-arrow-up"></i>
-                    </button>
-                </td>
-                <td class="middlebackground"><div class="inputstart">
-                    <input oninput="if(this.value.length != 0)
-                                        this.size=this.value.length;
-                                    else
-                                        this.size=this.placeholder.length;" 
-                    placeholder="name"
-                    value={this.state.name}
-                    size="4"/>
-                </div></td>
-                <td class="middlebackground">
-                    <input oninput="if(this.value.length != 0)
-                                        this.size=this.value.length;
-                                    else
-                                        this.size=this.placeholder.length;" 
-                    placeholder="super"
-                    value={this.state.super}
-                    size="5"/>
-                </td>
-                <td class="middlebackground"><div class="inputround">
-                    <input oninput="if(this.value.length != 0)
-                                        this.size=this.value.length;
-                                    else
-                                        this.size=this.placeholder.length;" 
-                    placeholder="type"
-                    value={this.state.type}
-                    size="4"/>
-                </div></td>
-                <td class="middlebackground">
-                    <input oninput="if(this.value.length != 0)
-                                        this.size=this.value.length;
-                                    else
-                                        this.size=this.placeholder.length;" 
-                    placeholder="cardinality"
-                    value={this.state.cardinality}
-                    size="11"/>
-                </td>
-                <td class="endbackground">
-                    <button class="btn"><i class="fa fa-ellipsis-h"></i></button>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="4">
-
-                <table id="constrait">
-                    <tr>
-                        <ConstraitView>
-                            
-                        </ConstraitView>
-                        
-                        
-                        
-                        
-                        <td class="startbackground"><div class="inputround">
-                            <input oninput="if(this.value.length != 0)
-                                                this.size=this.value.length;
-                                            else
-                                                this.size=this.placeholder.length;" 
-                            placeholder="type"
-                            size="4"/>
-                        </div></td>
-                        <td class="middlebackground">
-                            <input oninput="if(this.value.length != 0)
-                                                this.size=this.value.length;
-                                            else
-                                                this.size=this.placeholder.length;" 
-                            placeholder="cardinality"
-                            size="11"/>
-                        </td>
-                        <td class="endbackground">
-                            <button class="btn">
-                                <i class="fa fa-ellipsis-h"></i>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <button style="width:100%" class="btnlong">
-                                <i class="fa fa-plus"></i>
-                            </button>
-                        </td>
-                    </tr>
-                </table>
-
+                <tr>
+                    <td colSpan={3}>
+                        <table id="slot">
+                            <tr>
+                                <td className="btntall" rowSpan={2}>
+                                    <button className="btntall">
+                                        <i className="fa fa-arrow-up"></i>
+                                    </button>
+                                </td>
+                                <td className="middlebackground"><div className="inputstart">
+                                    <input 
+                                        onInput={this.nameChange}
+                                        onBlur={this.onBlur}
+                                        placeholder="name"
+                                        value={this.state.slot.name}
+                                        size={this.state.nameSize}
+                                    />
+                                </div></td>
+                                <td className="middlebackground">
+                                    <input 
+                                        onInput={this.superChange}
+                                        onBlur={this.onBlur}
+                                        placeholder="super"
+                                        value={this.state.slot.superName}
+                                        size={this.state.superSize}
+                                    />
+                                </td>
+                                <td className="middlebackground"><div className="inputround">
+                                    <input 
+                                        onInput={this.typeChange}
+                                        onBlur={this.onBlur}
+                                        placeholder= "type"
+                                        size={this.state.typeSize}
+                                        value= {this.state.slot.type.entityName} 
+                                    />
+                                </div></td>
+                                <td className="middlebackground">
+                                    <input 
+                                        onInput={this.cardinalityChange}
+                                        onBlur={this.onBlur}
+                                        placeholder="cardinality"
+                                        size={this.state.cardinalitySize} 
+                                        value= {
+                                            this.state.slot.cardinality.from.toString()
+                                            +".."+
+                                            this.state.slot.cardinality.toInf? "*" :
+                                            this.state.slot.cardinality.to.toString()
+                                            } />
+                                </td>
+                                <td className="endbackground">
+                                    <button className="btn"><i className="fa fa-ellipsis-h"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colSpan={4}>
+                                    <table id="constrait">
+                                        <ConstraitView 
+                                            constrait={this.state.slot.type} 
+                                            owner={this}
+                                        />
+                                        <ConstraitView 
+                                            constrait={this.state.slot.cardinality} 
+                                            owner={this}
+                                        />
+                                        {this.state.slot.customConstraits.map(constrait =>
+                                            <ConstraitView constrait={constrait} owner={this} />
+                                        )}   
+                                        <tr>
+                                            <td>
+                                                <button className="btnlong">
+                                                    <i className="fa fa-plus"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
         );
+    }
+        
+    typeChange(e){
+        this.setState({slot: {type: {value:e.target.value}},typeSize : e.target.value.size})   
+    }
+
+    cardinalityChange(e){
+        this.setState({slot: {cardinality: {value:e.target.value}},cardinalitySize : e.target.value.size})        
+    }
+
+    nameChange(e){
+        this.setState({slot: {name:e.target.value},nameSize: e.target.value.size})
+    }
+
+    superChange(e){
+        this.setState({slot: {super: e.target.value},superSize: e.target.value.size})
+    }
+    onBlur(e){
+        this.props.owner.setSlot(this.state.slot)
+    }
+
+    setConstrait(constrait:Constrait){
+        let c = constrait
+        switch(constrait.id){
+            case this.state.slot.type.id:
+                this.setState({slot:{type:(c as Type)}})
+                break;
+            case this.state.slot.cardinality.id:
+                this.setState({slot:{cardinality:c as Cardinality}})
+                break;
+            case this.state.slot.operationSignature.id:
+                this.setState({slot:{operationSignature:c as OperationSignature}})
+                break;
+            default:
+                let constrait=this.state.slot.customConstraits.find(item=>item.id===constrait.id)
+                if(constrait){
+                    let idx = this.state.slot.customConstraits.indexOf(constrait)
+                    let constraits = this.state.slot.customConstraits
+                    constraits[idx]=constrait
+                    this.setState({slot:{customConstraits:constraits}})
+                }
+                break;
+        }
     }
 }
