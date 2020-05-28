@@ -8,8 +8,8 @@ export type IncomingPacket =
 { type: "modelList", models: Model[] } |
 { type: "modelAdded", model: Model } |
 { type: "modelUpdated", model: Model } |
-{ type: "modelRemoved", modelId: string } |
-{ type: "modelDetail", models: Model[] } |
+{ type: "modelRemoved", modelId: number } |
+{ type: "modelDetail", model: Model } |
 { type: "entityAdded", entity: Entity }|
 { type: "entityUpdated", entity: Entity }|
-{ type: "entityRemoved", entityID: string };
+{ type: "entityRemoved", entityId: number };
