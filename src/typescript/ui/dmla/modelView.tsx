@@ -1,7 +1,6 @@
 import { Component } from "react";
 import React from "react";
 import { TreeNodeView } from "./treeNodeView";
-import { proxy } from "../../network/proxy";
 import { Model } from "../../model/data/dmla/Model";
 import  '../../../css/model.css';
 
