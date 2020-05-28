@@ -22,7 +22,7 @@
     top: 0;
     font-size: 9pt;
     transition: all 0.15s;
-    color: lightgray;
+    color: black;
     }
     .text-input .focus-indicator {
     position: absolute;
