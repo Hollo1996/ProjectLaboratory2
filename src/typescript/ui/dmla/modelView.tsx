@@ -9,7 +9,10 @@ export class ModelView extends Component<{model:Model},{}>{
 
     render(){
         return(
-            <TreeNodeView treeNode={this.state.model.root}/>
+            <div className="model">
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+                <TreeNodeView treeNode={this.state.model.root}/>
+            </div>
         )
     }
 }

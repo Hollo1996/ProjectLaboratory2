@@ -3,6 +3,7 @@ import React from "react";
 import { ModelRepresentationView } from "./modelRepresentationView";
 import { proxy } from "../../network/proxy";
 import { Model } from "../../model/data/dmla/Model";
+import  '../../../css/modelHandler.css';
 
 export class ModelHandlerView extends Component<{},{}>{
     state={userNameSize:8,models:[] as Model[]}
@@ -37,32 +38,33 @@ export class ModelHandlerView extends Component<{},{}>{
 
     render(){
         return(
-            <div>
+            <div className="handler">
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
-            <table className="outer">
-                <tr><td colSpan={2}>
-                <table className="header">
-                    <tr><td>
-                    <b>Welcome</b>
-                    <input 
+            <table className="handlerouter">
+                <tr className="handler"><td className="handler" colSpan={2}>
+                <table className="handlerheader">
+                    <tr className="handler"><td>
+                        <b>Welcome</b>
+                        <input 
+                            className="handler"
                             onChange={e=>this.onUserNameChange(e.target.value)} 
                             placeholder="userName"
                             size={this.state.userNameSize} 
-                            />
-                            <b>!</b>
-                            </td></tr>
-                            <tr><td>
+                        />
+                        <b>!</b>
+                        </td></tr>
+                        <tr className="handler"><td className="handler">
                             <b>Your models</b>
                         </td></tr>
                     </table>
                 </td></tr>
-                <tr><td>
-                <button className="long" onClick={this.onAdd}>
+                <tr className="handler"><td className="handler">
+                <button className="handlerlong" onClick={this.onAdd}>
                     <i className="fa fa-plus"></i>
                 </button>
                 </td></tr>
                 {this.state.models.map(model =>
-                    <tr><td>
+                    <tr className="handler"><td className="handler">
                         <ModelRepresentationView  owner={this} model={model}>
                         </ModelRepresentationView>
                     </td><td className="spacer"></td></tr>

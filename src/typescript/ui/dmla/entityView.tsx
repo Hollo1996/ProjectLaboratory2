@@ -52,7 +52,14 @@ export class EntityView extends Component<{entity:Entity},{}>{
                 </tr>
                 {this.state.entity.slots.map(slot =>
                     <SlotView slot={slot} owner={this} />
-                )} 
+                )}
+                <tr>
+                    <td colSpan={2}>
+                        <button className="btnlong" onClick={e=>this.onSlotClick}>
+                            <i className="fa fa-plus"></i>
+                        </button>
+                    </td>
+                </tr> 
         </table>)
     }
 
@@ -74,5 +81,36 @@ export class EntityView extends Component<{entity:Entity},{}>{
 
     setSlot(slot:Slot){
         this.setState({entity:{slot}})
+    }
+
+    onSlotClick(e){
+        this.state.entity.slots.push({id:0,
+            name:"",
+            superId:0,
+            superName:"",
+            type:{id:0,
+                name:"",
+                value:"",
+                entityId:0,
+                entityName:""},
+            cardinality:{id:0,
+                name:"",
+                value:"",
+                from:0,
+                to:0,
+                toInf:false},
+            operationSignature:{id:0,
+                name:"",
+                value:"",
+                items:null},
+            customConstraits:null,
+            values:null})
+        proxy.sendPacket(
+            {
+                type:"updateEntityRequest",
+                token: proxy.getToken(),
+                entity: this.state.entity
+            }
+        )
     }
 }

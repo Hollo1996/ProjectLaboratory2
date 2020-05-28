@@ -3,22 +3,24 @@ import React from "react";
 import { Model } from "../../model/data/dmla/Model";
 import { ModelHandlerView } from "./modelHandlerView";
 import { proxy } from "../../network/proxy";
+import  '../../../css/modelHandler.css';
 
 export class ModelRepresentationView extends Component<{owner:ModelHandlerView,model:Model},{}>{
     state={model:this.props.model,modelNameSize:9}
     render(){
-        return(<table className="model">
+        return(<table className="handlermodel">
                     <tr>
                         <td><input 
+                            className="handler"
                             onChange={e=>this.onModelNameChange(e.target.value)}
                             onBlur={e=>this.onBlur(e.target.value)}
                             placeholder="modelName"
                             size={this.state.modelNameSize}
                             /></td>
-                        <td><button className="round" onClick={e=>this.onOpen()}> 
+                        <td><button className="handlerround" onClick={e=>this.onOpen()}> 
                             <i className="fa fa-pencil"></i>
                         </button></td>
-                        <td><button className="round" onClick={e=>this.onDelete()}>
+                        <td><button className="handlerround" onClick={e=>this.onDelete()}>
                             <i className="fa fa-trash"></i>
                         </button></td>
                     </tr>
@@ -50,7 +52,7 @@ export class ModelRepresentationView extends Component<{owner:ModelHandlerView,m
     }
 
     onModelNameChange(e:string){
-        this.setState({model:this.state.model,modelNameSize : e.length})
+        this.setState({model:this.state.model,modelNameSize : e==="" ? 9 : e.length})
     }
 
 }

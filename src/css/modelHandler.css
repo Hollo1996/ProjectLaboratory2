@@ -1,16 +1,22 @@
 body{
 	padding:10px;
-    margin:0;
-  	background: rgba(255, 100, 100, 255);
-    align:central;
-    display: flex;
-    justify-content: center;
+  margin:0;
+  background: rgba(255, 100, 100, 255);
+  display: flex;
+  justify-content: center;
 }
-table.outer{
+div.handler{
+  width: 100%;
+  height: 100%;
+}
+td.spacer{
+  width: 100%;
+}
+table.handlerouter{
     width: 100%;
     justify-content: left;
 }
-table.header{
+table.handlerheader{
     width: 100%;
 	padding:20px 50px 20px 50px;
     margin:0;
@@ -19,7 +25,7 @@ table.header{
     justify-content: left;
     border-radius:20px;
 }
-table.model{
+table.handlermodel{
 	padding:10px;
     margin:0;
     padding:10px 10px 10px 20px;
@@ -29,18 +35,18 @@ table.model{
     border-radius:40px;
 }
 
-input{
+input.handler{
   background: rgba(255, 200, 200, 255);
   border-radius:10px;
   padding:2px 5px 2px 5px;
 }
-button.long{
+button.handlerlong{
   width: 100%;
   height: 40px;
   border-radius: 50px;
   background: rgba(255, 100, 0, 255);
 }
-button.round{
+button.handlerround{
   width: 25px;
   height: 25px;
   padding:0;
