@@ -25,6 +25,7 @@ class Proxy extends EventProducer<ProxyEventMap>
                     break;
                 case "login":
                     //this.inbox = p.inbox;
+                    this.token = p.token
                     this.dispatch("login");
                     break;
                 case "modelList":
@@ -58,7 +59,7 @@ class Proxy extends EventProducer<ProxyEventMap>
     //Adding mock
     //generating events
     private token:string;
-    
+
     getToken(){
         return this.token;
     }
