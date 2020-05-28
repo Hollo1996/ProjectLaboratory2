@@ -1,44 +1,47 @@
 import { Component } from "react";
+import React from "react";
 
 export class ConstraitView extends Component{
-    state = {type: "", cardinality: ""};
+    state = {type: "", cardinality: "", typeSize: 4, cardinalitySize: 11};
 
     render() {
         return (
             <table id="constrait">
                 <tr>
-                    <td class="startbackground"><div class="inputround">
-                        <input oninput="if(this.value.length != 0)
-                                                                this.size=this.value.length;
-                                                            else
-                                                                this.size=this.placeholder.length;"
+                    <td className="startbackground"><div className="inputround">
+                        <input onInput={this.typeChange}
                             placeholder= "type"
-                            size="4" 
+                            size={this.state.typeSize}
                             value= {this.state.type} />
                     </div></td>
-                    <td class="middlebackground">
-                        <input oninput="if(this.value.length != 0)
-                                                                this.size=this.value.length;
-                                                            else
-                                                                this.size=this.placeholder.length;"
+                    <td className="middlebackground">
+                        <input onInput={this.typeChange}
                             placeholder="cardinality"
-                            size="11" 
+                            size={this.state.cardinalitySize} 
                             value= {this.state.cardinality} />
                     </td>
-                    <td class="endbackground">
-                        <button class="btn">
-                            <i class="fa fa-ellipsis-h"></i>
+                    <td className="endbackground">
+                        <button className="btn">
+                            <i className="fa fa-ellipsis-h"></i>
                         </button>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <button style="width:100%" class="btnlong">
-                            <i class="fa fa-plus"></i>
+                        <button style={{width:"100%"}} className="btnlong">
+                            <i className="fa fa-plus"></i>
                         </button>
                     </td>
                 </tr>
             </table>
         );
+    }
+    
+    typeChange(e){
+        this.setState({typeSize : e.value.size})   
+    }
+
+    cardinalityChange(e){
+        this.setState({cardinalitySize : e.value.size})        
     }
 }
