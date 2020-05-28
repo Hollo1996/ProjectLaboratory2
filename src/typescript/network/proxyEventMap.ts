@@ -6,12 +6,12 @@ import { Entity } from "../model/data/dmla/Entity";
 export interface ProxyEventMap
 {
     "login": () => void;
-    "modelListed": (data:Model[]) => void;
-    "modelAdded": (data:Model) => void;
-    "modelUpdated": (data:Model) => void;
-    "modelRemoved": (id:string) => void;
-    "modelDetail": (data:Model) => void;
-    "entityAdded": (data:Entity) => void;
-    "entityUpdated": (data:Entity) => void;
-    "entityRemoved": (id:string) => void;
+    "modelListed": (models:Model[]) => void;
+    "modelAdded": (model:Model) => void;
+    "modelUpdated": (model:Model) => void;
+    "modelRemoved": (id:number) => void;
+    "modelDetail": (model:Model) => void;
+    "entityAdded": (entity:Entity) => void;
+    "entityUpdated": (entity:Entity) => void;
+    "entityRemoved": (id:number) => void;
 }

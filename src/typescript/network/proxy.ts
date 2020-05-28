@@ -57,7 +57,8 @@ class Proxy extends EventProducer<ProxyEventMap>
 
     //Adding mock
     //generating events
-    private token:String;
+    private token:string;
+    
     getToken(){
         return this.token;
     }

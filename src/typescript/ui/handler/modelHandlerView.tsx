@@ -1,5 +1,88 @@
 import { Component } from "react";
+import React from "react";
+import { ModelRepresentationView } from "./modelRepresentationView";
+import { proxy } from "../../network/proxy";
+import { Model } from "../../model/data/dmla/Model";
 
-export class ModelHandlerView extends Component{
+export class ModelHandlerView extends Component<{},{}>{
+    state={userNameSize:8,models:[] as Model[]}
+    
+    componentDidMount() {
+        proxy.addEventListener("modelListed", (models) => {
+            this.setState({models:models})
+        }, this);
+        proxy.addEventListener("modelAdded", (model) => {
+            let models=this.state.models
+            models.push(model)
+            this.setState({models:models})
+        }, this);
+        proxy.addEventListener("modelRemoved", (modelId) => {
+            let models=this.state.models.filter(item=>item.id!=modelId)
+            this.setState({models:models})
+        }, this);
+        proxy.addEventListener("modelUpdated", (model) => {
+            let oldmodel = this.state.models.find(item=>item.id!=model.id)
+            if(oldmodel){
+                let modelIx = this.state.models.indexOf(oldmodel)
+                let models = this.state.models
+                models[modelIx]=model
+                this.setState({models:models})
+            }
+        }, this);
+    }
 
+    componentWillUnmount() {
+        proxy.removeAllEventListener(this);
+    }
+
+    render(){
+        return(
+            <div>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+            <table className="outer">
+                <tr><td colSpan={2}>
+                <table className="header">
+                    <tr><td>
+                    <b>Welcome</b>
+                    <input 
+                            onInput={this.onUserNameChange} 
+                            placeholder="userName"
+                            size={this.state.userNameSize} 
+                            />
+                            <b>!</b>
+                            </td></tr>
+                            <tr><td>
+                            <b>Your models</b>
+                        </td></tr>
+                    </table>
+                </td></tr>
+                <tr><td>
+                <button className="long" onClick={this.onAdd}>
+                    <i className="fa fa-plus"></i>
+                </button>
+                </td></tr>
+                {this.state.models.map(model =>
+                    <tr><td>
+                        <ModelRepresentationView  owner={this} model={model}>
+                        </ModelRepresentationView>
+                    </td><td className="spacer"></td></tr>
+                )}
+                
+            </table>
+            </div>
+        )
+    }
+
+    onUserNameChange(e){
+        this.state.userNameSize=e.target.value.size;
+    }
+
+    onAdd(e){
+        proxy.sendPacket(
+            {
+                type:"modelCreateRequest",
+                token: proxy.getToken()
+            }
+        )
+    }
 }
