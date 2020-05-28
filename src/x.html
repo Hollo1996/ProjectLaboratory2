@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+
+table,div{
+  border-collapse: collapse;
+  margin:0;
+  padding:0;
+}
+tr,td{
+  height: 100%;
+  margin:0;
+  padding:0;
+}
+table#entity td:nth-child(4){
+    width:100%;
+}
+table#slot td.middlebackground{
+    border-top: 1px solid rgba(255, 100, 100, 63);
+}
+table#constrait td.middlebackground{
+    border-top: 1px solid rgba(255, 100, 100, 63);
+}
+table#constrait td.startbackground{
+    border-top: 1px solid rgba(255, 100, 100, 63);
+}
+
+input{
+  border: none;
+  background: rgba(255, 200, 200, 0);
+}
+
+button{
+  padding: 0px;
+  background: rgba(255, 100, 0, 255);
+}
+.btn{
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+}
+.btnlong{
+  height: 25px;
+  width: 100%;
+  border-radius: 50px;
+}
+.btntall{
+  height: 100%;
+  width: 25px;
+  border-radius: 50px 0 0 50px;
+}
+.btnstart{
+  background: rgba(255, 200, 200, 255);
+  border-radius: 50px 0 0 50px;
+}
+.btnend{
+  background: rgba(255, 200, 200, 255);
+  border-radius: 0 50px 50px 0;
+}
+
+.input {
+  background: rgba(255, 200, 200, 255);
+}
+.inputstart {
+  background: rgba(255, 200, 200, 255);
+  border-radius: 0 50px 50px 0;
+  padding:3px
+}
+.inputplain {
+  background: rgba(0, 0, 0, 0);
+}
+.inputround {
+  background: rgba(255, 200, 200, 255);
+  border-radius: 50px;
+  padding: 3px 10px 3px 10px;
+}
+
+.startbackground{
+  background: rgba(255, 150, 150, 255);
+  border-radius: 50px 0 0 50px;
+}
+.middlebackground{
+  background: rgba(255, 150, 150, 255);
+}
+.endbackground{
+  background: rgba(255, 150, 150, 255);
+  border-radius: 0 50px 50px 0;
+}
+</style>
+</head>
+<body>
+<!-- Add icon library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<h2>Basic HTML Table</h2>
+
+<table id="fa">
+	<tr>
+        <td>
+
+            <table id="entity">
+                <tr>
+                    <td class="btntall" rowspan="3">
+                        <button class="btntall"><i class="fa fa-arrow-up"></i></button>
+                    </td>                
+                    <td class="middlebackground"><div class="inputstart">
+                        <input
+                        oninput="if(this.value.length != 0)
+                                    this.size=this.value.length;
+                                else
+                                    this.size=this.placeholder.length;" 
+                        placeholder="name"
+                        size="4"/>
+                    </div></td>
+                    <td class="middlebackground">
+                        <input oninput="if(this.value.length != 0)
+                                            this.size=this.value.length;
+                                        else
+                                            this.size=this.placeholder.length;" 
+                        placeholder="super"
+                        size="5"/>
+                    </td>
+                    <td class="middlebackground"><div class="btnstart">
+                        <button class="btnlong">
+                            <i class="fa fa-arrows-alt"></i>
+                        </button>
+                    </div></td>
+                    <td class="btnend">
+                        <button class="btn">
+                            <i class="fa fa-ellipsis-h"></i>
+                        </button>
+                    </td>
+                </tr>    
+                <tr>
+                    <td colspan="3">
+
+                        <table id="slot">
+                            <tr>
+                                <td class="btntall" rowspan="2">
+                                    <button class="btntall">
+                                        <i class="fa fa-arrow-up"></i>
+                                    </button>
+                                </td>
+                                <td class="middlebackground"><div class="inputstart">
+                                    <input oninput="if(this.value.length != 0)
+                                                        this.size=this.value.length;
+                                                    else
+                                                        this.size=this.placeholder.length;" 
+                                    placeholder="name"
+                                    size="4"/>
+                                </div></td>
+                                <td class="middlebackground">
+                                    <input oninput="if(this.value.length != 0)
+                                                        this.size=this.value.length;
+                                                    else
+                                                        this.size=this.placeholder.length;" 
+                                    placeholder="super"
+                                    size="5"/>
+                                </td>
+                                <td class="middlebackground"><div class="inputround">
+                                    <input oninput="if(this.value.length != 0)
+                                                        this.size=this.value.length;
+                                                    else
+                                                        this.size=this.placeholder.length;" 
+                                    placeholder="type"
+                                    size="4"/>
+                                </div></td>
+                                <td class="middlebackground">
+                                    <input oninput="if(this.value.length != 0)
+                                                        this.size=this.value.length;
+                                                    else
+                                                        this.size=this.placeholder.length;" 
+                                    placeholder="cardinality"
+                                    size="11"/>
+                                </td>
+                                <td class="endbackground">
+                                    <button class="btn"><i class="fa fa-ellipsis-h"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4">
+
+                                <table id="constrait">
+                                    <tr>
+                                        <td class="startbackground"><div class="inputround">
+                                            <input oninput="if(this.value.length != 0)
+                                                                this.size=this.value.length;
+                                                            else
+                                                                this.size=this.placeholder.length;" 
+                                            placeholder="type"
+                                            size="4"/>
+                                        </div></td>
+                                        <td class="middlebackground">
+                                            <input oninput="if(this.value.length != 0)
+                                                                this.size=this.value.length;
+                                                            else
+                                                                this.size=this.placeholder.length;" 
+                                            placeholder="cardinality"
+                                            size="11"/>
+                                        </td>
+                                        <td class="endbackground">
+                                            <button class="btn">
+                                            	<i class="fa fa-ellipsis-h"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <button style="width:100%" class="btnlong">
+                                                <i class="fa fa-plus"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </table>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <button class="btnlong" style="width:100%">
+                                            <i class="fa fa-plus"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </table>
+
+                    </td>
+                </tr>
+            </table>
+
+        </td>
+    </tr>
+    <tr id="trfaentitychildren">
+	</tr>
+</table>
+<br>
+</body>
+</html>

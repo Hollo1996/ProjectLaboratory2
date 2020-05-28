@@ -9,13 +9,13 @@ class Proxy extends EventProducer<ProxyEventMap>
 {
     //mock websocket
     private ws: MockWebSocket;
-    //inbox: InboxDto | null = null;
+    
 
     constructor() {
         super();
         //add mock websocket
         this.ws = new MockWebSocket("wss://raja.aut.bme.hu/chat/");
-        //this.ws.addEventListener("open", () => {});
+        this.token="";
         
         this.ws.addEventListener("message", (e) => {
             let p = <IncomingPacket>JSON.parse(e.data);
@@ -27,21 +27,41 @@ class Proxy extends EventProducer<ProxyEventMap>
                     //this.inbox = p.inbox;
                     this.dispatch("login");
                     break;
-                /*case "message":
-                    let cid = p.channelId;
-                    this.inbox!.conversations.find(x => x.channelId === cid)?.lastMessages.push(p.message);
-                    this.dispatch("message", cid, p.message);
-                    break;*/
-                /*case "conversationAdded":
-                    this.inbox!.conversations.push(p.conversation);
-                    this.dispatch("conversation", p.conversation.channelId);
-                    break;*/
+                case "modelList":
+                    this.dispatch("modelListed",p.models);
+                    break;
+                case "modelAdded":
+                    this.dispatch("modelAdded",p.model);
+                    break;
+                case "modelUpdated":
+                    this.dispatch("modelUpdated",p.model);
+                    break;
+                case "modelRemoved":
+                    this.dispatch("modelRemoved",p.modelId);
+                    break;
+                case "modelDetail":
+                    this.dispatch("modelDetail",p.models);
+                    break;
+                case "entityAdded":
+                    this.dispatch("entityAdded",p.entity);
+                    break;
+                case "entityUpdated":
+                    this.dispatch("entityUpdated",p.entity);
+                    break;
+                case "entityRemoved":
+                    this.dispatch("entityRemoved",p.entityID);
+                    break;
             }
         },this);
     }
 
     //Adding mock
     //generating events
+    private token:String;
+    getToken(){
+        return this.token;
+    }
+
     sendPacket(packet: OutgoingPacket) {
         this.ws.send(JSON.stringify(packet));
     }

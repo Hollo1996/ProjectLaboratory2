@@ -9,6 +9,7 @@ export class MockWebSocket extends EventProducer<MockWebSocketEventMap>{
 
     url : string;
     users: UserDto[] = [];
+    logins = new Map<string,string>();
     
     constructor(url:string){
         super();
@@ -32,19 +33,64 @@ export class MockWebSocket extends EventProducer<MockWebSocketEventMap>{
     }
 
     login(email: string, password: string, staySignedIn: boolean){
-
+        let index = this.users.findIndex(item => item.email==email && item.password==password)
+        if(index==-1)
+        this.sendPacket({
+            type:"error",
+            message:"Wrong email or password!"
+        })
+        else{  
+        let token = Math.random().toString()
+        this.users[index].lastToken=token
+        this.users[index].staySignedIn=staySignedIn
+        this.logins[JSON.stringify(this.users[index])]=token
+        this.sendPacket({
+            type:"login",
+            token:token
+        })
+        }
     }
 
     loginWithToken(token: string){
+        let found = false
 
+        let index = this.users.findIndex(item=> item.staySignedIn&&item.lastToken==token)
+        
+        if(!found){
+            this.sendPacket({
+                type:"error",
+                message:"User is not loged in!"
+            })
+        }
+        else{  
+            let token = Math.random().toString()
+            this.users[index].lastToken=token
+            this.logins[JSON.stringify(this.users[index])]=token
+            this.sendPacket({
+                type:"login",
+                token:token
+            })
+        }
     }
 
     register(email: string, password: string, displayName: string, staySignedIn: boolean){
+        this.users.push({
+            id:this.users[this.users.length-1].id+1,
+            displayName:displayName,
+            email:email,
+            password:password,
+            staySignedIn:staySignedIn,
+            lastToken:""
+        })
 
+        this.sendPacket({
+            type:"user",
+            user:this.users[this.users.length-1]
+        })
     }
 
     sendPacket(packet: IncomingPacket) {
-        
+        this.dispatch("message",JSON.stringify(packet))
     }
 
 }
