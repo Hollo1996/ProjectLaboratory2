@@ -16,14 +16,14 @@ export class ConstraitView extends Component<{constrait:Constrait,owner:SlotView
                 <tr>
                     <td className="backgroundstart"><div className="inputround">
                         <input className="model"
-                            onInput={this.typeChange}
+                            onChange={this.typeChange}
                             placeholder= "type"
                             size={this.state.typeSize}
                             value= {this.state.constrait.type} />
                     </div></td>
                     <td className="backgroundmiddle">
                         <input className="model"
-                            onInput={this.valueChange}
+                            onChange={this.valueChange}
                             placeholder="value"
                             size={this.state.valueSize} 
                             value= {this.state.constrait.value} />
@@ -39,11 +39,11 @@ export class ConstraitView extends Component<{constrait:Constrait,owner:SlotView
     }
     
     typeChange(e){
-        this.setState({typeSize : e.target.value.size})   
+        this.setState({typeSize : e.target.value.length> 4? e.target.value.length:4})   
     }
 
     valueChange(e){
-        this.setState({valueSize : e.target.value.size})        
+        this.setState({valueSize : e.target.value.length> 5? e.target.value.length:5})        
     }
 
     onBlure(){

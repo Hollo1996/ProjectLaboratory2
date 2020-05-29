@@ -31,7 +31,7 @@ export class SlotView extends Component<{owner:EntityView,slot:Slot},{}>{
                                 <td className="backgroundmiddle"><div className="inputstart">
                                     <input 
                                         className="model"
-                                        onInput={this.nameChange}
+                                        onChange={this.nameChange}
                                         onBlur={this.onBlur}
                                         placeholder="name"
                                         value={this.state.slot.name}
@@ -41,7 +41,7 @@ export class SlotView extends Component<{owner:EntityView,slot:Slot},{}>{
                                 <td className="backgroundmiddle">
                                     <input 
                                         className="model"
-                                        onInput={this.superChange}
+                                        onChange={this.superChange}
                                         onBlur={this.onBlur}
                                         placeholder="super"
                                         value={this.state.slot.superName}
@@ -51,7 +51,7 @@ export class SlotView extends Component<{owner:EntityView,slot:Slot},{}>{
                                 <td className="backgroundmiddle"><div className="inputround">
                                     <input 
                                         className="model"
-                                        onInput={this.typeChange}
+                                        onChange={this.typeChange}
                                         onBlur={this.onBlur}
                                         placeholder= "type"
                                         size={this.state.typeSize}
@@ -61,7 +61,7 @@ export class SlotView extends Component<{owner:EntityView,slot:Slot},{}>{
                                 <td className="backgroundmiddle">
                                     <input 
                                         className="model"
-                                        onInput={this.cardinalityChange}
+                                        onChange={this.cardinalityChange}
                                         onBlur={this.onBlur}
                                         placeholder="cardinality"
                                         size={this.state.cardinalitySize} 
@@ -109,19 +109,19 @@ export class SlotView extends Component<{owner:EntityView,slot:Slot},{}>{
     }
         
     typeChange(e){
-        this.setState({slot: {type: {value:e.target.value}},typeSize : e.target.value.size})   
+        this.setState({slot: {type: {value:e.target.value}},typeSize : e.target.value.length> 4? e.target.value.length:4})   
     }
 
     cardinalityChange(e){
-        this.setState({slot: {cardinality: {value:e.target.value}},cardinalitySize : e.target.value.size})        
+        this.setState({slot: {cardinality: {value:e.target.value}},cardinalitySize : e.target.value.length> 11? e.target.value.length:11})        
     }
 
     nameChange(e){
-        this.setState({slot: {name:e.target.value},nameSize: e.target.value.size})
+        this.setState({slot: {name:e.target.value},nameSize: e.target.value.length> 4? e.target.value.length:4})
     }
 
     superChange(e){
-        this.setState({slot: {super: e.target.value},superSize: e.target.value.size})
+        this.setState({slot: {super: e.target.value},superSize: e.target.value.length> 4? e.target.value.length:4})
     }
     onBlur(e){
         this.props.owner.setSlot(this.state.slot)

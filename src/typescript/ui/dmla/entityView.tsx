@@ -24,7 +24,7 @@ export class EntityView extends Component<{entity:Entity},{}>{
                     <td className="backgroundmiddle"><div className="inputstart">
                         <input 
                             className="model"
-                            onInput={this.nameChange}
+                            onChange={this.nameChange}
                             onBlur={this.onBlur}
                             placeholder="name"
                             value={this.state.entity.name}
@@ -34,7 +34,7 @@ export class EntityView extends Component<{entity:Entity},{}>{
                     <td className="backgroundmiddle">
                         <input 
                             className="model"
-                            onInput={this.superChange}
+                            onChange={this.superChange}
                             onBlur={this.onBlur}
                             placeholder="super"
                             value={this.state.entity.super}
@@ -66,11 +66,11 @@ export class EntityView extends Component<{entity:Entity},{}>{
     }
 
     nameChange(e){
-        this.setState({entity: {name:e.target.value},nameSize: e.target.value.size})
+        this.setState({entity: {name:e.target.value},nameSize: e.target.value.length> 4? e.target.value.length:4})
     }
 
     superChange(e){
-        this.setState({entity: {super: e.target.value},superSize: e.target.value.size})
+        this.setState({entity: {super: e.target.value},superSize: e.target.value.length>4? e.target.value.length:4})
     }
 
     onBlur(e){
