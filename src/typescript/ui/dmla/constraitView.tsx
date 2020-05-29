@@ -12,38 +12,38 @@ export class ConstraitView extends Component<{constrait:Constrait,owner:SlotView
 
     render() {
         return (
-            <table id="constrait">
-                <tr>
-                    <td className="backgroundstart"><div className="inputround">
-                        <input className="model"
-                            onChange={this.typeChange}
-                            placeholder= "type"
-                            size={this.state.typeSize}
-                            value= {this.state.constrait.type} />
-                    </div></td>
-                    <td className="backgroundmiddle">
-                        <input className="model"
-                            onChange={this.valueChange}
-                            placeholder="value"
-                            size={this.state.valueSize} 
-                            value= {this.state.constrait.value} />
-                    </td>
-                    <td className="backgroundend">
-                        <button className="btnround">
-                            <i className="fa fa-ellipsis-h"></i>
-                        </button>
-                    </td>
-                </tr>
-            </table>
+            <tr>
+                <td className="backgroundstart"><div className="inputround">
+                    <input className="model"
+                        onChange={e=>this.typeChange(e)}
+                        onBlur={e=>this.onBlure()}
+                        placeholder= "type"
+                        size={this.state.typeSize}
+                        value= {this.state.constrait.type} />
+                </div></td>
+                <td className="backgroundmiddle">
+                    <input className="model"
+                        onChange={e=>this.valueChange(e)}
+                        onBlur={e=>this.onBlure()}
+                        placeholder="value"
+                        size={this.state.valueSize} 
+                        value= {this.state.constrait.value} />
+                </td>
+                <td className="backgroundend">
+                    <button className="btnround">
+                        <i className="fa fa-ellipsis-h"></i>
+                    </button>
+                </td>
+            </tr>
         );
     }
     
     typeChange(e){
-        this.setState({typeSize : e.target.value.length> 4? e.target.value.length:4})   
+        this.setState({constrait:{value:e.target.value},typeSize : e.target.value.length> 4? e.target.value.length:4})   
     }
 
     valueChange(e){
-        this.setState({valueSize : e.target.value.length> 5? e.target.value.length:5})        
+        this.setState({constrait:{type:e.target.value},valueSize : e.target.value.length> 5? e.target.value.length:5})        
     }
 
     onBlure(){

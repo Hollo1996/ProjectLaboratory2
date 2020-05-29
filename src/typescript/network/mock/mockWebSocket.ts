@@ -180,10 +180,10 @@ export class MockWebSocket extends EventProducer<MockWebSocketEventMap>{
                                 id:this.idCounter+4,
                                 name:"Children",
                                 superId:this.idCounter+4,
-                                super:"Children",
-                                type:{id:this.idCounter+5,timeStamp:"",entityId:this.idCounter+3,entityName:"ComplexEntity"},
-                                cardinality:{id:this.idCounter+6,timeStamp:"",from:0,to:100,toInf:true},
-                                operationSignature:{id:this.idCounter+7,timeStamp:"",items:[]},
+                                superName:"Children",
+                                type:{id:this.idCounter+5,timeStamp:"",entityId:this.idCounter+3,entityName:"ComplexEntity",value:"ComplexEntity",type:"type"},
+                                cardinality:{id:this.idCounter+6,timeStamp:"",from:0,to:100,toInf:true,value:"0..*",type:"cardinality"},
+                                operationSignature:{id:this.idCounter+7,timeStamp:"",items:[],value:"()",type:"operationSignature"},
                                 customConstraits:[],
                                 values:[]
                             }

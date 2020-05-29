@@ -17,10 +17,10 @@ export class ModelRepresentationView extends Component<{owner:ModelHandlerView,m
                             placeholder="modelName"
                             size={this.state.modelNameSize}
                             /></td>
-                        <td><button className="handlerround" onClick={e=>this.onOpen()}> 
+                        <td><button className="handlerround" onClick={e => this.onOpen()}> 
                             <i className="fa fa-pencil"></i>
                         </button></td>
-                        <td><button className="handlerround" onClick={e=>this.onDelete()}>
+                        <td><button className="handlerround" onClick={e => this.onDelete}>
                             <i className="fa fa-trash"></i>
                         </button></td>
                     </tr>

@@ -10,22 +10,34 @@ export class EntityView extends Component<{entity:Entity},{}>{
 
     state = {
         entity: this.props.entity,
-        nameSize:4, 
-        superSize:4
+        nameSize: this.props.entity.name? this.props.entity.name.length : 4, 
+        superSize: this.props.entity.super? this.props.entity.super.length:5,
+        isOpen:false
     }
 
     render(){
         return(
         <table id="entity">
                 <tr>
-                    <td rowSpan={3}>
-                        <button className="btntall"><i className="fa fa-arrow-up"></i></button>
-                    </td>                
+                    {this.state.isOpen&&
+                        <td rowSpan={2}>
+                            <button className="btntall" onClick={e =>this.onClose()}>
+                                <i className="fa fa-arrow-up"></i>
+                            </button>
+                        </td> 
+                    }     
+                    {!this.state.isOpen&&  
+                        <td className="backgroundstart"><div className="btnstart">
+                            <button className="btnround" onClick={e =>this.onOpen()}>
+                                <i className="fa fa-arrow-down"></i>
+                            </button>
+                        </div></td> 
+                    }          
                     <td className="backgroundmiddle"><div className="inputstart">
                         <input 
                             className="model"
-                            onChange={this.nameChange}
-                            onBlur={this.onBlur}
+                            onChange={e=>this.nameChange(e)}
+                            onBlur={e=>this.onBlur()}
                             placeholder="name"
                             value={this.state.entity.name}
                             size={this.state.nameSize}
@@ -34,8 +46,8 @@ export class EntityView extends Component<{entity:Entity},{}>{
                     <td className="backgroundmiddle">
                         <input 
                             className="model"
-                            onChange={this.superChange}
-                            onBlur={this.onBlur}
+                            onChange={e=>this.superChange(e)}
+                            onBlur={e=>this.onBlur()}
                             placeholder="super"
                             value={this.state.entity.super}
                             size={this.state.superSize}
@@ -46,23 +58,39 @@ export class EntityView extends Component<{entity:Entity},{}>{
                             <i className="fa fa-arrows-alt"></i>
                         </button>
                     </div></td>
-                    <td className="backgroundend">
+                    <td className="backgroundend"><div className="btnend">
                         <button className="btnround">
                             <i className="fa fa-ellipsis-h"></i>
                         </button>
-                    </td>
+                    </div></td>
                 </tr>
-                {this.state.entity.slots.map(slot =>
-                    <SlotView slot={slot} owner={this} />
-                )}
-                <tr>
-                    <td colSpan={2}>
-                        <button className="btnlong" onClick={e=>this.onSlotClick}>
-                            <i className="fa fa-plus"></i>
-                        </button>
-                    </td>
-                </tr> 
+                {this.state.isOpen&& 
+                    <tr>
+                        <td colSpan={3}>
+                            <table id="slot">
+                                {this.state.entity.slots.map(slot =>
+                                    <SlotView slot={slot} owner={this} />
+                                )}
+                                <tr>
+                                    <td colSpan={2}>
+                                        <button className="btnlong" onClick={e=>this.onSlotClick()}>
+                                            <i className="fa fa-plus"></i>
+                                        </button>
+                                    </td>
+                                </tr> 
+                            </table>
+                        </td>
+                    </tr>
+                }
         </table>)
+    }
+
+    onOpen(){
+        this.setState({isOpen:true})
+    }
+
+    onClose(){
+        this.setState({isOpen:false})
     }
 
     nameChange(e){
@@ -73,7 +101,7 @@ export class EntityView extends Component<{entity:Entity},{}>{
         this.setState({entity: {super: e.target.value},superSize: e.target.value.length>4? e.target.value.length:4})
     }
 
-    onBlur(e){
+    onBlur(){
         proxy.sendPacket({
             type:"updateEntityRequest",
             token:proxy.getToken(),
@@ -82,11 +110,15 @@ export class EntityView extends Component<{entity:Entity},{}>{
     }
 
     setSlot(slot:Slot){
-        this.setState({entity:{slot}})
+        let slots = this.state.entity.slots
+        let ix = slots.indexOf(slots.find(item=>item.id===slot.id))
+        slots[ix]=slots
+        this.setState({entity:{slots:slots}})
     }
 
-    onSlotClick(e){
-        this.state.entity.slots.push({id:0,
+    onSlotClick(){
+        let slots = this.state.entity.slots
+        slots.push({id:0,
             name:"",
             superId:0,
             superName:"",
@@ -104,9 +136,12 @@ export class EntityView extends Component<{entity:Entity},{}>{
             operationSignature:{id:0,
                 name:"",
                 value:"",
-                items:null},
-            customConstraits:null,
-            values:null})
+                items:[]},
+            customConstraits:[],
+            values:[]})
+
+        this.setState({entity:{slots:slots}})
+
         proxy.sendPacket(
             {
                 type:"updateEntityRequest",

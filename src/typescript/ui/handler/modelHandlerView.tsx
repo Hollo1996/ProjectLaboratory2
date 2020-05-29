@@ -59,7 +59,7 @@ export class ModelHandlerView extends Component<{},{}>{
                     </table>
                 </td></tr>
                 <tr className="handler"><td className="handler">
-                <button className="handlerlong" onClick={this.onAdd}>
+                <button className="handlerlong" onClick={e => this.onAdd()}>
                     <i className="fa fa-plus"></i>
                 </button>
                 </td></tr>
@@ -79,7 +79,7 @@ export class ModelHandlerView extends Component<{},{}>{
         this.setState({userNameSize:e.length})
     }
 
-    onAdd(e){
+    onAdd(){
         proxy.sendPacket(
             {
                 type:"modelCreateRequest",
