@@ -24,7 +24,6 @@ class Proxy extends EventProducer<ProxyEventMap>
                     alert(p.message);
                     break;
                 case "login":
-                    //this.inbox = p.inbox;
                     this.token = p.token
                     this.dispatch("login");
                     break;
@@ -43,6 +42,10 @@ class Proxy extends EventProducer<ProxyEventMap>
                 case "modelDetail":
                     this.dispatch("modelDetail",p.model);
                     break;
+                case "wholeModelUpdated":
+                    this.dispatch("wholeModelUpdated",p.model);
+                    break;
+                /*
                 case "entityAdded":
                     this.dispatch("entityAdded",p.entity);
                     break;
@@ -52,6 +55,7 @@ class Proxy extends EventProducer<ProxyEventMap>
                 case "entityRemoved":
                     this.dispatch("entityRemoved",p.entityId);
                     break;
+                    */
             }
         },this);
     }

@@ -11,7 +11,8 @@ export interface ProxyEventMap
     "modelUpdated": (model:Model) => void;
     "modelRemoved": (id:number) => void;
     "modelDetail": (model:Model) => void;
-    "entityAdded": (entity:Entity) => void;
+    "wholeModelUpdated": (model:Model) => void;
+    /*"entityAdded": (entity:Entity) => void;
     "entityUpdated": (entity:Entity) => void;
-    "entityRemoved": (id:number) => void;
+    "entityRemoved": (id:number) => void;*/
 }

@@ -120,50 +120,67 @@ export class SlotView extends Component<{owner:EntityView,slot:Slot},{}>{
     }
         
     typeChange(e){
-        this.setState({slot: {type: {value:e.target.value}},typeSize : e.target.value.length> 4? e.target.value.length:4})   
+        let slot = this.state.slot
+        let type = slot.type
+        type.value = e.target.value
+        slot.type = type
+        this.setState({slot: slot ,typeSize : e.target.value.length> 4? e.target.value.length:4})   
     }
 
     cardinalityChange(e){
-        this.setState({slot: {cardinality: {value:e.target.value}},cardinalitySize : e.target.value.length> 11? e.target.value.length:11})        
+        let slot = this.state.slot
+        let cardinality = slot.cardinality
+        cardinality.value = e.target.value
+        slot.cardinality = cardinality
+        this.setState({slot: slot,cardinalitySize : e.target.value.length> 11? e.target.value.length:11})        
     }
 
     nameChange(e){
-        this.setState({slot: {name: e.target.value},nameSize: e.target.value.length> 4? e.target.value.length:4})
+        let slot = this.state.slot
+        slot.name = e.target.value
+        this.setState({slot: slot,nameSize: e.target.value.length> 4? e.target.value.length:4})
     }
 
     superChange(e){
-        this.setState({slot: {super: e.target.value},superSize: e.target.value.length> 4? e.target.value.length:4})
+        let slot = this.state.slot
+        slot.superName = e.target.value
+        this.setState({slot: slot,superSize: e.target.value.length> 4? e.target.value.length:4})
     }
     onBlur(){
         this.props.owner.setSlot(this.state.slot)
     }
 
     setConstrait(c:Constrait){
-        switch(c.id){
-            case this.state.slot.type.id:
-                this.setState({slot:{type:(c as Type)}})
+        let slot = this.state.slot
+        switch(c.type){
+            case "type":
                 break;
-            case this.state.slot.cardinality.id:
-                this.setState({slot:{cardinality:c as Cardinality}})
+            case "cardinality":
+                slot.cardinality = c as Cardinality
                 break;
-            case this.state.slot.operationSignature.id:
-                this.setState({slot:{operationSignature:c as OperationSignature}})
+            case "operationSignature":
+                slot.operationSignature = c as OperationSignature
                 break;
             default:
-                let constraits = this.state.slot.customConstraits
+                let constraits = slot.customConstraits
                 let constrait=constraits.find(item=>item.id===c.id)
                 if(constrait){
                     let idx = constraits.indexOf(constrait)
                     constraits[idx]=c
-                    this.setState({slot:{customConstraits:constraits}})
+                    slot.customConstraits=constraits
                 }
                 break;
         }
+        this.forceUpdate()
+        this.props.owner.setSlot(slot)
     }
+
     onConstraitClickPlus(){
-        let cc = this.state.slot.customConstraits
-        cc.push({id:0, type:"", value:""})
-        this.setState({customConstraits:cc})
+        let slot = this.state.slot
+        let cc = slot.customConstraits
+        cc.push({id:-1, type:"", value:""})
+        slot.customConstraits = cc
         this.props.owner.setSlot(this.state.slot)
+        this.forceUpdate()
     }
 }

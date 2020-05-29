@@ -63,6 +63,16 @@ export class EntityView extends Component<{entity:Entity},{}>{
                             <i className="fa fa-ellipsis-h"></i>
                         </button>
                     </div></td>
+                    <td className="backgroundend"><div className="btnend">
+                        <button className="btnround" onClick={e=>this.addEntity()}>
+                            <i className="fa fa-plus"></i>
+                        </button>
+                    </div></td>
+                    <td className="backgroundend"><div className="btnend">
+                        <button className="btnround" onClick={e=>this.deleteEntity()}>
+                            <i className="fa fa-trash"></i>
+                        </button>
+                    </div></td>
                 </tr>
                 {this.state.isOpen&& 
                     <tr>
@@ -84,6 +94,21 @@ export class EntityView extends Component<{entity:Entity},{}>{
                 }
         </table>)
     }
+    deleteEntity(): void {
+        proxy.sendPacket({
+            type:"removeEntityRequest",
+            token:proxy.getToken(),
+            entityId:this.state.entity.id
+        })
+    }
+
+    addEntity(): void {
+        proxy.sendPacket({
+            type:"createEntityRequest",
+            token:proxy.getToken(),
+            superId:this.state.entity.id
+        })
+    }
 
     onOpen(){
         this.setState({isOpen:true})
@@ -94,11 +119,15 @@ export class EntityView extends Component<{entity:Entity},{}>{
     }
 
     nameChange(e){
-        this.setState({entity: {name:e.target.value},nameSize: e.target.value.length> 4? e.target.value.length:4})
+        let entity = this.state.entity
+        entity.name=e.target.value
+        this.setState({entity: entity,nameSize: e.target.value.length> 4? e.target.value.length:4})
     }
 
     superChange(e){
-        this.setState({entity: {super: e.target.value},superSize: e.target.value.length>4? e.target.value.length:4})
+        let entity = this.state.entity
+        entity.super=e.target.value
+        this.setState({entity: entity,superSize: e.target.value.length>4? e.target.value.length:4})
     }
 
     onBlur(){
@@ -110,43 +139,53 @@ export class EntityView extends Component<{entity:Entity},{}>{
     }
 
     setSlot(slot:Slot){
-        let slots = this.state.entity.slots
+        let entity= this.state.entity
+        let slots = entity.slots
         let ix = slots.indexOf(slots.find(item=>item.id===slot.id))
-        slots[ix]=slots
-        this.setState({entity:{slots:slots}})
+        slots[ix]=slot
+        entity.slots=slots
+        proxy.sendPacket(
+            {
+                type:"updateEntityRequest",
+                token: proxy.getToken(),
+                entity: entity
+            }
+        )
     }
 
     onSlotClick(){
-        let slots = this.state.entity.slots
-        slots.push({id:0,
+        let entity = this.state.entity
+        let slots = entity.slots
+        slots.push({
+            id:-1,
             name:"",
-            superId:0,
+            superId:-1,
             superName:"",
-            type:{id:0,
-                name:"",
+            type:{id:-1,
+                type:"type",
                 value:"",
-                entityId:0,
+                entityId:-1,
                 entityName:""},
-            cardinality:{id:0,
-                name:"",
-                value:"",
+            cardinality:{id:-1,
+                type:"cardinality",
+                value:"0..*",
                 from:0,
-                to:0,
-                toInf:false},
-            operationSignature:{id:0,
-                name:"",
-                value:"",
+                to:1000,
+                toInf:true},
+            operationSignature:{id:-1,
+                type:"operationSignature",
+                value:"()",
                 items:[]},
             customConstraits:[],
             values:[]})
 
-        this.setState({entity:{slots:slots}})
+        entity.slots=slots
 
         proxy.sendPacket(
             {
                 type:"updateEntityRequest",
                 token: proxy.getToken(),
-                entity: this.state.entity
+                entity: entity
             }
         )
     }

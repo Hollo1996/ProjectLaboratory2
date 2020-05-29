@@ -39,11 +39,15 @@ export class ConstraitView extends Component<{constrait:Constrait,owner:SlotView
     }
     
     typeChange(e){
-        this.setState({constrait:{value:e.target.value},typeSize : e.target.value.length> 4? e.target.value.length:4})   
+        let constrait = this.state.constrait
+        constrait.type=e.target.value
+        this.setState({constrait:constrait,typeSize : e.target.value.length> 4? e.target.value.length:4})   
     }
 
     valueChange(e){
-        this.setState({constrait:{type:e.target.value},valueSize : e.target.value.length> 5? e.target.value.length:5})        
+        let constrait = this.state.constrait
+        constrait.value=e.target.value
+        this.setState({constrait:constrait,valueSize : e.target.value.length> 5? e.target.value.length:5})        
     }
 
     onBlure(){

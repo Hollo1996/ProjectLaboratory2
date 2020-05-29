@@ -10,6 +10,7 @@ export type IncomingPacket =
 { type: "modelUpdated", model: Model } |
 { type: "modelRemoved", modelId: number } |
 { type: "modelDetail", model: Model } |
-{ type: "entityAdded", entity: Entity }|
+{ type: "wholeModelUpdated", model: Model } 
+/*{ type: "entityAdded", entity: Entity }|
 { type: "entityUpdated", entity: Entity }|
-{ type: "entityRemoved", entityId: number };
+{ type: "entityRemoved", entityId: number }*/;

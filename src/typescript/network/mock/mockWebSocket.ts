@@ -8,6 +8,7 @@ import { Entity } from "../../model/data/dmla/Entity";
 import { unstable_renderSubtreeIntoContainer } from "react-dom";
 import { TreeNode } from "../../model/data/dmla/TreeNode";
 import { timingSafeEqual } from "crypto";
+import { SSL_OP_NO_TICKET } from "constants";
 
 
 export class MockWebSocket extends EventProducer<MockWebSocketEventMap>{
@@ -290,10 +291,24 @@ export class MockWebSocket extends EventProducer<MockWebSocketEventMap>{
                 nodeResult = node;
             }
             else{
-                nodeResult = this.findNodeByEntityId(entityId,node.children)
+                let nodeTmp = this.findNodeByEntityId(entityId,node.children)
+                if(nodeTmp)
+                    nodeResult=nodeTmp
             }
         })
         return nodeResult
+
+    }
+
+    findModelByEntityId(entityId: number, models: Model[]){
+        let modelResult :Model|undefined;
+        models.forEach( model=>{
+            let node = this.findNodeByEntityId(entityId,[model.root])
+            if(node){
+                modelResult = model;
+            }
+        })
+        return modelResult
 
     }
 
@@ -332,16 +347,50 @@ export class MockWebSocket extends EventProducer<MockWebSocketEventMap>{
 
                     node.children.push(newNode)
 
+                    let model = this.findModelByEntityId(superId,models)
+                    if(model)
+                        this.sendPacket({
+                            type:"wholeModelUpdated",
+                            model:model
+                        })
+                    /*
                     this.sendPacket({
                         type:"entityAdded",
                         entity:newNode.entity
                     })
+                    */
                 }
             }
         }
     }
 
     updateEntityRequest(token: string, entity: Entity) {
+
+        entity.slots.forEach(slot=>{
+            if(slot.id===-1){
+                slot.id=this.idCounter+1
+                this.idCounter+=1
+            }
+            if(slot.cardinality.id===-1){
+                slot.cardinality.id=this.idCounter+1
+                this.idCounter+=1
+            }
+            if(slot.type.id===-1){
+                slot.type.id=this.idCounter+1
+                this.idCounter+=1
+            }
+            if(slot.operationSignature.id===-1){
+                slot.operationSignature.id=this.idCounter+1
+                this.idCounter+=1
+            }
+            slot.customConstraits.forEach(constrait=>{
+                if(constrait.id===-1){
+                    constrait.id=this.idCounter+1
+                    this.idCounter+=1
+                }
+            })
+        })
+
         let user = this.token2logedInUser(token);
         if(user){
             let models:Model[] = this.models[user.id];
@@ -362,10 +411,17 @@ export class MockWebSocket extends EventProducer<MockWebSocketEventMap>{
                 else{
                     node.entity=entity
 
+                    let model = this.findModelByEntityId(entity.id,models)
+                    if(model)
+                        this.sendPacket({
+                            type:"wholeModelUpdated",
+                            model:model
+                        })
+                        /*
                     this.sendPacket({
-                        type:"entityAdded",
+                        type:"entityUpdated",
                         entity:entity
-                    })
+                    })*/
                 }
             }
         }
@@ -389,7 +445,8 @@ export class MockWebSocket extends EventProducer<MockWebSocketEventMap>{
                     })
                 }
                 else{
-                    let superNode = this.findNodeByEntityId(entityId,models.map(item=>item.root))
+                    let model = this.findModelByEntityId(entityId,models)
+                    let superNode = this.findNodeByEntityId(node.entity.superId,models.map(item=>item.root))
                     if(!superNode){
                         this.sendPacket({
                             type:"error",
@@ -399,11 +456,16 @@ export class MockWebSocket extends EventProducer<MockWebSocketEventMap>{
                     else{
                         superNode.children=superNode.children.filter(item=>item!=node)
                     }
-
+                    if(model)
+                        this.sendPacket({
+                            type:"wholeModelUpdated",
+                            model:model
+                        })
+                    /*
                     this.sendPacket({
                         type:"entityRemoved",
                         entityId:entityId
-                    })
+                    })*/
                 }
             }
         }
