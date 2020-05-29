@@ -18,11 +18,12 @@ export class EntityView extends Component<{entity:Entity},{}>{
         return(
         <table id="entity">
                 <tr>
-                    <td className="btntall" rowSpan={3}>
+                    <td rowSpan={3}>
                         <button className="btntall"><i className="fa fa-arrow-up"></i></button>
                     </td>                
-                    <td className="middlebackground"><div className="inputstart">
+                    <td className="backgroundmiddle"><div className="inputstart">
                         <input 
+                            className="model"
                             onInput={this.nameChange}
                             onBlur={this.onBlur}
                             placeholder="name"
@@ -30,8 +31,9 @@ export class EntityView extends Component<{entity:Entity},{}>{
                             size={this.state.nameSize}
                         />  
                     </div></td>
-                    <td className="middlebackground">
+                    <td className="backgroundmiddle">
                         <input 
+                            className="model"
                             onInput={this.superChange}
                             onBlur={this.onBlur}
                             placeholder="super"
@@ -39,13 +41,13 @@ export class EntityView extends Component<{entity:Entity},{}>{
                             size={this.state.superSize}
                         />
                     </td>
-                    <td className="middlebackground"><div className="btnstart">
+                    <td className="backgroundmiddle"><div className="btnstart">
                         <button className="btnlong">
                             <i className="fa fa-arrows-alt"></i>
                         </button>
                     </div></td>
-                    <td className="endbackground">
-                        <button className="btn">
+                    <td className="backgroundend">
+                        <button className="btnround">
                             <i className="fa fa-ellipsis-h"></i>
                         </button>
                     </td>

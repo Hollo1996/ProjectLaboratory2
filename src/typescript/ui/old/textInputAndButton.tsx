@@ -15,7 +15,7 @@ export class TextInputAndButton extends Component<TextInputAndButtonOptions>
         return (
             <div className="text-input-and-button">
                 <TextInput {...this.props} ref={this.textInput} onEnter={() => this.onClick()} />
-                <button type="button" onClick={() => this.onClick()}>
+                <button className="base" type="button" onClick={() => this.onClick()}>
                     {this.props.buttonContent}
                 </button>
             </div>

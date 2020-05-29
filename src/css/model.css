@@ -1,10 +1,10 @@
-table.model{
-  border-collapse: collapse;
+table#entity,table#slot,table#constrait{
   margin:0;
   padding:0;
+  border-spacing: 0px;
+  border-collapse: collapse;
 }
 div.model{
-  border-collapse: collapse;
   margin:0;
   padding:0;
 }
@@ -17,6 +17,8 @@ td{
   height: 100%;
   margin:0;
   padding:0;
+  border:0;
+  border-collapse: collapse;
 }
 table#entity td:nth-child(4){
     width:100%;
@@ -32,8 +34,10 @@ table#constrait td.startbackground{
 }
 
 input.model{
-  border: none;
+  border: 0;
   background: rgba(255, 200, 200, 0);
+  margin:0;
+  padding:0;
 }
 
 button.btnround{
@@ -58,26 +62,44 @@ button.btntall{
   border-radius: 50px 0 0 50px;
 }
 div.btnstart{
+  border-collapse: collapse;
+  margin:0;
+  padding:0;
   background: rgba(255, 200, 200, 255);
   border-radius: 50px 0 0 50px;
 }
 div.btnend{
+  border-collapse: collapse;
+  margin:0;
+  padding:0;
   background: rgba(255, 200, 200, 255);
   border-radius: 0 50px 50px 0;
 }
 
 div.input {
+  border-collapse: collapse;
+  margin:0;
+  padding:0;
   background: rgba(255, 200, 200, 255);
 }
 div.inputstart {
+  border-collapse: collapse;
+  margin:0;
+  padding:0;
   background: rgba(255, 200, 200, 255);
   border-radius: 0 50px 50px 0;
   padding:3px
 }
 div.inputplain {
+  border-collapse: collapse;
+  margin:0;
+  padding:0;
   background: rgba(0, 0, 0, 0);
 }
 div.inputround {
+  border-collapse: collapse;
+  margin:0;
+  padding:0;
   background: rgba(255, 200, 200, 255);
   border-radius: 50px;
   padding: 3px 10px 3px 10px;
@@ -89,6 +111,7 @@ td.backgroundstart{
 }
 td.backgroundmiddle{
   background: rgba(255, 150, 150, 255);
+  border-top: 1px solid rgba(255, 100, 100, 255);
 }
 td.backgroundend{
   background: rgba(255, 150, 150, 255);

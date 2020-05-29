@@ -23,13 +23,14 @@ export class SlotView extends Component<{owner:EntityView,slot:Slot},{}>{
                     <td colSpan={3}>
                         <table id="slot">
                             <tr>
-                                <td className="btntall" rowSpan={2}>
+                                <td rowSpan={2}>
                                     <button className="btntall">
                                         <i className="fa fa-arrow-up"></i>
                                     </button>
                                 </td>
-                                <td className="middlebackground"><div className="inputstart">
+                                <td className="backgroundmiddle"><div className="inputstart">
                                     <input 
+                                        className="model"
                                         onInput={this.nameChange}
                                         onBlur={this.onBlur}
                                         placeholder="name"
@@ -37,8 +38,9 @@ export class SlotView extends Component<{owner:EntityView,slot:Slot},{}>{
                                         size={this.state.nameSize}
                                     />
                                 </div></td>
-                                <td className="middlebackground">
+                                <td className="backgroundmiddle">
                                     <input 
+                                        className="model"
                                         onInput={this.superChange}
                                         onBlur={this.onBlur}
                                         placeholder="super"
@@ -46,8 +48,9 @@ export class SlotView extends Component<{owner:EntityView,slot:Slot},{}>{
                                         size={this.state.superSize}
                                     />
                                 </td>
-                                <td className="middlebackground"><div className="inputround">
+                                <td className="backgroundmiddle"><div className="inputround">
                                     <input 
+                                        className="model"
                                         onInput={this.typeChange}
                                         onBlur={this.onBlur}
                                         placeholder= "type"
@@ -55,8 +58,9 @@ export class SlotView extends Component<{owner:EntityView,slot:Slot},{}>{
                                         value= {this.state.slot.type.entityName} 
                                     />
                                 </div></td>
-                                <td className="middlebackground">
+                                <td className="backgroundmiddle">
                                     <input 
+                                        className="model"
                                         onInput={this.cardinalityChange}
                                         onBlur={this.onBlur}
                                         placeholder="cardinality"
@@ -68,8 +72,8 @@ export class SlotView extends Component<{owner:EntityView,slot:Slot},{}>{
                                             this.state.slot.cardinality.to.toString()
                                             } />
                                 </td>
-                                <td className="endbackground">
-                                    <button className="btn"><i className="fa fa-ellipsis-h"></i></button>
+                                <td className="backgroundend">
+                                    <button className="btnround"><i className="fa fa-ellipsis-h"></i></button>
                                 </td>
                             </tr>
                             <tr>

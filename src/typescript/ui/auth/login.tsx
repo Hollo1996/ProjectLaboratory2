@@ -10,7 +10,7 @@ export class Login extends Component {
     render() {
         return (
             <div className="login">
-                <b><p>{this.state.register ? "Switch back to " : "Have no account yet? Go and "}
+                <b><p className="base">{this.state.register ? "Switch back to " : "Have no account yet? Go and "}
                     <a href="" onClick={e => {
                         e.preventDefault();
                         this.setState(state => ({ register: !this.state.register }));

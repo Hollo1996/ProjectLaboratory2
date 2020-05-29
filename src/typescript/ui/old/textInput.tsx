@@ -19,7 +19,7 @@ export class TextInput extends Component<TextInputOptions>{
 
         return (
             <div className="text-input">
-                <input type={this.props.type ?? "text"} value={this.state.value}
+                <input className="base" type={this.props.type ?? "text"} value={this.state.value}
                     onChange={e => {
                         this.setState({ value: e.target.value });
                         this.props.onChange?.(e.target.value);
