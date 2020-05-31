@@ -20,7 +20,7 @@ export class ModelRepresentationView extends Component<{owner:ModelHandlerView,m
                         <td><button className="handlerround" onClick={e => this.onOpen()}> 
                             <i className="fa fa-pencil"></i>
                         </button></td>
-                        <td><button className="handlerround" onClick={e => this.onDelete}>
+                        <td><button className="handlerround" onClick={e => this.onDelete()}>
                             <i className="fa fa-trash"></i>
                         </button></td>
                     </tr>
@@ -36,11 +36,7 @@ export class ModelRepresentationView extends Component<{owner:ModelHandlerView,m
     }
 
     onDelete(){
-        proxy.sendPacket({
-            type:"modelRemoveRequest",
-            token:proxy.getToken(),
-            modelId: this.state.model.id         
-        })
+        this.props.owner.onDelete(this.state.model.id)
     }
 
     onOpen(){

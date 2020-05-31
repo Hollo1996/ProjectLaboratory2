@@ -6,7 +6,7 @@ import { Model } from "../../model/data/dmla/Model";
 import  '../../../css/modelHandler.css';
 
 export class ModelHandlerView extends Component<{},{}>{
-    state={userNameSize:8,models:[] as Model[]}
+    state={userNameSize:8,models:[] as Model[],showList:true}
     
     componentDidMount() {
         proxy.addEventListener("modelListed", (models) => {
@@ -19,7 +19,7 @@ export class ModelHandlerView extends Component<{},{}>{
         }, this);
         proxy.addEventListener("modelRemoved", (modelId) => {
             let models=this.state.models.filter(item=>item.id!==modelId)
-            this.setState({models:models})
+            this.setState({models:models,showList:false})
         }, this);
         proxy.addEventListener("modelUpdated", (model) => {
             let oldmodel = this.state.models.find(item=>item.id!==model.id)
@@ -30,6 +30,13 @@ export class ModelHandlerView extends Component<{},{}>{
                 this.setState({models:models})
             }
         }, this);
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        console.log("List state is updated!");
+        if(!this.state.showList){
+            this.setState({showList:true});
+        }
     }
 
     componentWillUnmount() {
@@ -64,7 +71,7 @@ export class ModelHandlerView extends Component<{},{}>{
                 </button>
                 </td></tr>
                 {this.state.models.map((model,index) =>
-                    <tr key={index} className="handler"><td className="handler">
+                    <tr key={model.id} className="handler"><td className="handler">
                         <ModelRepresentationView  owner={this} model={model}>
                         </ModelRepresentationView>
                     </td><td className="spacer"></td></tr>
@@ -76,6 +83,14 @@ export class ModelHandlerView extends Component<{},{}>{
 
     onUserNameChange(e:string){
         this.setState({userNameSize:e.length})
+    }
+
+    onDelete(modelId:number){
+        proxy.sendPacket({
+            type:"modelRemoveRequest",
+            token:proxy.getToken(),
+            modelId: modelId         
+        })
     }
 
     onAdd(){

@@ -200,10 +200,7 @@ export class MockWebSocket extends EventProducer<MockWebSocketEventMap>{
 
             this.idCounter+=7
 
-            this.sendPacket({
-                type:"modelAdded",
-                model:model
-            })
+            this.modelListRequest(token)
         }
     }
     modelMetaUpdateRequest(token: string, model: Model) {
@@ -223,10 +220,7 @@ export class MockWebSocket extends EventProducer<MockWebSocketEventMap>{
                 oldModel.super=model.super;
                 oldModel.superId=model.superId;
 
-                this.sendPacket({
-                    type:"modelUpdated",
-                    model:oldModel
-                })
+                this.modelListRequest(token)
             }
         }
     }
@@ -250,10 +244,8 @@ export class MockWebSocket extends EventProducer<MockWebSocketEventMap>{
                 }
                 else{
                     this.models[user.id]=models.filter(item=>item!==model)
-                    this.sendPacket({
-                        type:"modelRemoved",
-                        modelId:modelId
-                    })
+                    
+                    this.modelListRequest(token)
                 }
             }
         }
