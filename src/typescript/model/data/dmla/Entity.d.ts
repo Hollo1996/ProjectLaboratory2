@@ -4,4 +4,6 @@ export interface Entity{
     superId:number;
     super:string;
     slots:Slot[];
+    isOpen:Boolean;
+    isOperationsOpen:Boolean;
 }

@@ -1,10 +1,8 @@
 import { Component } from "react";
-import { render } from "@testing-library/react";
 import React from "react";
 import { TreeNode } from "../../model/data/dmla/TreeNode";
 import { EntityView } from "./entityView";
 import  '../../../css/model.css';
-import { proxy } from "../../network/proxy";
 
 export class TreeNodeView extends Component<{treeNode:TreeNode},{}>
 {
@@ -53,18 +51,22 @@ export class TreeNodeView extends Component<{treeNode:TreeNode},{}>
     render(){
         return(
             <table id="fa">
-                <tr>
-                    <td>
-                        <EntityView entity={this.state.treeNode.entity}/>
-                    </td>
-                </tr>
-                <tr>
-                    {this.state.treeNode.children.map(item =>
-                        <td>
-                            <TreeNodeView treeNode={item}/>
+                <tbody>
+                    <tr>
+                        <td colSpan={1}>
+                            <EntityView entity={this.state.treeNode.entity}/>
                         </td>
-                    )}
-                </tr>
+                        <td className="spacer" colSpan={this.state.treeNode.children.length}></td>
+                    </tr>
+                    <tr className="spacer">
+                        {this.state.treeNode.children.map((item,index) =>
+                            <td key={index}>
+                                <TreeNodeView treeNode={item}/>
+                            </td>
+                        )}
+                        <td className="spacer"></td>
+                    </tr>
+                </tbody>
             </table>
         )
     }

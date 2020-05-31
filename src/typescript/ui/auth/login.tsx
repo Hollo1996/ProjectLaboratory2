@@ -20,7 +20,7 @@ export class Login extends Component {
                     </a>
                 </p></b>
 
-                <img src="logo512.png" width="256" />
+                <img src="logo512.png" width="256" alt=""/>
                 {this.state.register &&
                     <TextInput
                         key={ this.state.displayName } 
@@ -70,7 +70,7 @@ export class Login extends Component {
     }
 
     onEmailChange(value: string) {
-        if (value == "COIGBV") {
+        if (value === "COIGBV") {
             this.setState({ email: "COIGBV", displayName: "Akos" })
         }
         else {

@@ -18,11 +18,11 @@ export class ModelHandlerView extends Component<{},{}>{
             this.setState({models:models})
         }, this);
         proxy.addEventListener("modelRemoved", (modelId) => {
-            let models=this.state.models.filter(item=>item.id!=modelId)
+            let models=this.state.models.filter(item=>item.id!==modelId)
             this.setState({models:models})
         }, this);
         proxy.addEventListener("modelUpdated", (model) => {
-            let oldmodel = this.state.models.find(item=>item.id!=model.id)
+            let oldmodel = this.state.models.find(item=>item.id!==model.id)
             if(oldmodel){
                 let modelIx = this.state.models.indexOf(oldmodel)
                 let models = this.state.models
@@ -40,9 +40,9 @@ export class ModelHandlerView extends Component<{},{}>{
         return(
             <div className="handler">
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
-            <table className="handlerouter">
+            <table className="handlerouter"><tbody>
                 <tr className="handler"><td className="handler" colSpan={2}>
-                <table className="handlerheader">
+                <table className="handlerheader"><tbody>
                     <tr className="handler"><td>
                         <b>Welcome</b>
                         <input 
@@ -56,22 +56,21 @@ export class ModelHandlerView extends Component<{},{}>{
                         <tr className="handler"><td className="handler">
                             <b>Your models</b>
                         </td></tr>
-                    </table>
+                    </tbody></table>
                 </td></tr>
                 <tr className="handler"><td className="handler">
                 <button className="handlerlong" onClick={e => this.onAdd()}>
                     <i className="fa fa-plus"></i>
                 </button>
                 </td></tr>
-                {this.state.models.map(model =>
-                    <tr className="handler"><td className="handler">
+                {this.state.models.map((model,index) =>
+                    <tr key={index} className="handler"><td className="handler">
                         <ModelRepresentationView  owner={this} model={model}>
                         </ModelRepresentationView>
                     </td><td className="spacer"></td></tr>
                 )}
                 
-            </table>
-            </div>
+            </tbody></table></div>
         )
     }
 

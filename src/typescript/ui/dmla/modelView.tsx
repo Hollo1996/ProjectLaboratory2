@@ -15,19 +15,15 @@ export class ModelView extends Component<{model:Model},{}>{
 
     componentDidMount() {
         proxy.addEventListener("wholeModelUpdated", (model) => {
-            this.setState({showRoot:false})
-            this.sleep(500)
-            this.forceUpdate()
-            this.sleep(500)
-            this.setState({model:model})
-            this.sleep(500)
-            this.forceUpdate()
-            this.sleep(500)
-            this.setState({showRoot:true})
-            this.sleep(500)
-            this.forceUpdate()
-            this.sleep(500)
+            this.setState({showRoot:false,model:model});
         }, this);
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        console.log("Model state is updated!");
+        if(!this.state.showRoot){
+            this.setState({showRoot:true});
+        }
     }
 
     componentWillUnmount() {

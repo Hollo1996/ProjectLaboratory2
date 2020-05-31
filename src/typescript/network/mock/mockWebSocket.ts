@@ -5,10 +5,7 @@ import { OutgoingPacket } from "../data/outgoingPacket";
 import { UserDto } from "../../model/data/auth/userDto";
 import { Model } from "../../model/data/dmla/Model";
 import { Entity } from "../../model/data/dmla/Entity";
-import { unstable_renderSubtreeIntoContainer } from "react-dom";
 import { TreeNode } from "../../model/data/dmla/TreeNode";
-import { timingSafeEqual } from "crypto";
-import { SSL_OP_NO_TICKET } from "constants";
 
 
 export class MockWebSocket extends EventProducer<MockWebSocketEventMap>{
@@ -26,7 +23,7 @@ export class MockWebSocket extends EventProducer<MockWebSocketEventMap>{
     }
 
     send(data:string){
-        let p = <OutgoingPacket>JSON.parse(data);
+        let p = JSON.parse(data) as OutgoingPacket;
         switch (p.type) {
             case "login":
                 this.login(p.email,p.password,p.staySignedIn);
@@ -68,7 +65,7 @@ export class MockWebSocket extends EventProducer<MockWebSocketEventMap>{
         let user:UserDto|undefined;
         this.logins.forEach((value,key) =>
             {
-                if(value==token)
+                if(value===token)
                     user = this.users.find(it=>it.id===key)
             }
         )
@@ -81,8 +78,8 @@ export class MockWebSocket extends EventProducer<MockWebSocketEventMap>{
     }
 
     login(email: string, password: string, staySignedIn: boolean){
-        let index = this.users.findIndex(item => item.email==email && item.password==password)
-        if(index==-1)
+        let index = this.users.findIndex(item => item.email===email && item.password===password)
+        if(index===-1)
             this.sendPacket({
                 type:"error",
                 message:"Wrong email or password!"
@@ -102,7 +99,7 @@ export class MockWebSocket extends EventProducer<MockWebSocketEventMap>{
     loginWithToken(token: string){
         let found = false
 
-        let index = this.users.findIndex(item=> item.staySignedIn&&item.lastToken==token)
+        let index = this.users.findIndex(item=> item.staySignedIn&&item.lastToken===token)
         
         if(!found){
             this.sendPacket({
@@ -146,8 +143,8 @@ export class MockWebSocket extends EventProducer<MockWebSocketEventMap>{
         if(user)
             this.sendPacket({
                 type:"modelList",
-                models:this.models[user.id].map(item=>{
-                        let model ={
+                models:this.models[user.id].map(item => {
+                    let model = {
                             id:item.id,
                             name:item.name,
                             superId:item.superId,
@@ -157,8 +154,9 @@ export class MockWebSocket extends EventProducer<MockWebSocketEventMap>{
                                 entity:item.root.entity,
                                 children:[]
                             }
-                        }
-                    })
+                    }
+                    return model
+                })
             })
     }
     modelCreateRequest(token: string) {
@@ -186,9 +184,13 @@ export class MockWebSocket extends EventProducer<MockWebSocketEventMap>{
                                 cardinality:{id:this.idCounter+6,timeStamp:"",from:0,to:100,toInf:true,value:"0..*",type:"cardinality"},
                                 operationSignature:{id:this.idCounter+7,timeStamp:"",items:[],value:"()",type:"operationSignature"},
                                 customConstraits:[],
-                                values:[]
+                                values:[],
+                                isOpen:true,
+                                isOperationsOpen:false
                             }
-                        ]
+                        ],
+                        isOpen:true,
+                        isOperationsOpen:false
                     },
                     children:[]
                 }
@@ -208,7 +210,7 @@ export class MockWebSocket extends EventProducer<MockWebSocketEventMap>{
         let user = this.token2logedInUser(token)
         if(user){
             let models = this.models[user.id];
-            let oldModel=models.find(item=>item.id==model.id);
+            let oldModel=models.find(item=>item.id===model.id);
             if(!oldModel){
                 this.sendPacket({
                     type:"error",
@@ -239,7 +241,7 @@ export class MockWebSocket extends EventProducer<MockWebSocketEventMap>{
                 })
             }
             else{
-                let model=models.find(item=>item.id==modelId);
+                let model=models.find(item=>item.id===modelId);
                 if(!model){
                     this.sendPacket({
                         type:"error",
@@ -247,7 +249,7 @@ export class MockWebSocket extends EventProducer<MockWebSocketEventMap>{
                     })
                 }
                 else{
-                    this.models[user.id]=models.filter(item=>item!=model)
+                    this.models[user.id]=models.filter(item=>item!==model)
                     this.sendPacket({
                         type:"modelRemoved",
                         modelId:modelId
@@ -267,7 +269,7 @@ export class MockWebSocket extends EventProducer<MockWebSocketEventMap>{
                 })
             }
             else{
-                let model=models.find(item=>item.id==modelId);
+                let model=models.find(item=>item.id===modelId);
                 if(!model){
                     this.sendPacket({
                         type:"error",
@@ -338,12 +340,14 @@ export class MockWebSocket extends EventProducer<MockWebSocketEventMap>{
                             name:"",
                             superId:superId,
                             super:node.entity.name,
-                            slots:[]
+                            slots:[],
+                            isOpen:true,
+                            isOperationsOpen:false
                         },
                         children:[]
                     }
                     
-                    id:this.idCounter+=2
+                    this.idCounter+=2
 
                     node.children.push(newNode)
 
@@ -454,7 +458,7 @@ export class MockWebSocket extends EventProducer<MockWebSocketEventMap>{
                         })
                     }
                     else{
-                        superNode.children=superNode.children.filter(item=>item!=node)
+                        superNode.children=superNode.children.filter(item=>item!==node)
                     }
                     if(model)
                         this.sendPacket({

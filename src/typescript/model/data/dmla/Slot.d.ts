@@ -12,4 +12,6 @@ export interface Slot {
     operationSignature:OperationSignature;
     customConstraits:Constrait[];
     values:Entity[];
+    isOpen:Boolean;
+    isOperationsOpen:Boolean;
 }

@@ -12,7 +12,7 @@ export class ConstraitView extends Component<{constrait:Constrait,owner:SlotView
 
     render() {
         return (
-            <tr>
+            <tr className="spacer">
                 <td className="backgroundstart"><div className="inputround">
                     <input className="model"
                         onChange={e=>this.typeChange(e)}
@@ -29,15 +29,62 @@ export class ConstraitView extends Component<{constrait:Constrait,owner:SlotView
                         size={this.state.valueSize} 
                         value= {this.state.constrait.value} />
                 </td>
-                <td className="backgroundend">
-                    <button className="btnround">
-                        <i className="fa fa-ellipsis-h"></i>
-                    </button>
-                </td>
+                {!this.state.constrait.isOperationsOpen &&
+                    <td><table id="modelmenu"><tr>
+                        <td className="backgroundend">
+                            <button className="btnround" onClick={e=>this.onSwitchOptions()}>
+                                <i className="fa fa-ellipsis-h"></i>
+                            </button>
+                        </td>
+                        <td className="spacer"></td>
+                    </tr></table></td>
+                }
+                {this.state.constrait.isOperationsOpen && <>
+                    <td className="backgroundend"><table id="modelmenu"><tr>
+                        <td>
+                            <button className="btnround" onClick={e=>this.onSwitchOptions()}>
+                                <i className="fa fa-ellipsis-h"></i>
+                            </button>
+                        </td>
+                        <td><div className="btnstart">
+                            <button className="btnround" onClick={e=>this.moveConstraitUp()}>
+                                <i className="fa fa-arrow-up"></i>
+                            </button>
+                        </div></td>
+                        <td><div className="btnmiddle">
+                            <button className="btnround" onClick={e=>this.moveConstraitDown()}>
+                                <i className="fa fa-arrow-down"></i>
+                            </button>
+                        </div></td>
+                        <td><div className="btnend">
+                            <button className="btnround" onClick={e=>this.deleteConstrait()}>
+                                <i className="fa fa-trash"></i>
+                            </button>
+                        </div></td>
+                    </tr></table></td>
+                </>}
             </tr>
         );
     }
-    
+
+    deleteConstrait(): void {
+        this.props.owner.deleteConstrait(this.state.constrait)
+    }
+
+    moveConstraitUp(): void {
+        this.props.owner.moveConstraitUp(this.state.constrait)
+    }
+
+    moveConstraitDown(): void {
+        this.props.owner.moveConstraitDown(this.state.constrait)
+    }
+
+    onSwitchOptions() {
+        let constrait = this.state.constrait
+        constrait.isOperationsOpen = !constrait.isOperationsOpen
+        this.props.owner.setConstrait(constrait)
+    }
+
     typeChange(e){
         let constrait = this.state.constrait
         constrait.type=e.target.value

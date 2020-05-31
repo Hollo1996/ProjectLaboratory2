@@ -8,7 +8,7 @@ import  '../../../css/modelHandler.css';
 export class ModelRepresentationView extends Component<{owner:ModelHandlerView,model:Model},{}>{
     state={model:this.props.model,modelNameSize:9}
     render(){
-        return(<table className="handlermodel">
+        return(<table className="handlermodel"><tbody>
                     <tr>
                         <td><input 
                             className="handler"
@@ -24,7 +24,7 @@ export class ModelRepresentationView extends Component<{owner:ModelHandlerView,m
                             <i className="fa fa-trash"></i>
                         </button></td>
                     </tr>
-                </table>)
+                </tbody></table>)
     }
 
     onBlur(e:string){

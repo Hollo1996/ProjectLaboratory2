@@ -1,17 +1,25 @@
-table#entity,table#slot,table#constrait{
+table#entity,table#slot,table#constrait,table#modelmenu{
   margin:0;
   padding:0;
   border-spacing: 0px;
   border-collapse: collapse;
 }
+
+table#fa{
+  border:1px solid rgba(255,150,150,255)
+}
+
 div.model{
   margin:0;
   padding:0;
 }
 tr{
-  height: 100%;
   margin:0;
   padding:0;
+  align-content: top;
+}
+tr.spacer{
+  height: 100%;
 }
 td{
   height: 100%;
@@ -19,6 +27,7 @@ td{
   padding:0;
   border:0;
   border-collapse: collapse;
+  vertical-align: top;
 }
 table#entity td:nth-child(4){
     width:100%;
@@ -68,6 +77,13 @@ div.btnstart{
   padding:0;
   background: rgba(255, 200, 200, 255);
   border-radius: 50px 0 0 50px;
+}
+div.btnmiddle{
+  border-collapse: collapse;
+  margin:0;
+  padding:0;
+  background: rgba(255, 200, 200, 255);
+  border-radius: 0 0 0 0;
 }
 div.btnend{
   border-collapse: collapse;

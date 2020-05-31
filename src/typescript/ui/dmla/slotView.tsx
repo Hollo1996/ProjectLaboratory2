@@ -4,10 +4,11 @@ import React from "react";
 import { Slot } from "../../model/data/dmla/Slot";
 import { EntityView } from "./entityView";
 import { Constrait } from "../../model/data/dmla/Constrait";
-import { Type } from "../../model/data/dmla/constrait/Type";
 import { Cardinality } from "../../model/data/dmla/constrait/Cardinality";
 import { OperationSignature } from "../../model/data/dmla/constrait/OperationSigniture";
 import  '../../../css/model.css';
+import { proxy } from "../../network/proxy";
+import { SSL_OP_ALLOW_UNSAFE_LEGACY_RENEGOTIATION } from "constants";
 
 export class SlotView extends Component<{owner:EntityView,slot:Slot},{}>{
     state = {
@@ -16,20 +17,19 @@ export class SlotView extends Component<{owner:EntityView,slot:Slot},{}>{
         cardinalitySize: this.props.slot.cardinality.value? this.props.slot.cardinality.value.length : 11,
         nameSize:this.props.slot.name? this.props.slot.name.length : 4, 
         superSize:this.props.slot.superName? this.props.slot.superName.length : 4,
-        isOpen:false
     };
     render(){
         return(
             <>
-                <tr>
-                    {this.state.isOpen &&   
+                <tr className="spacer">
+                    {this.state.slot.isOpen &&   
                         <td rowSpan={2}>
                             <button className="btntall" onClick={e =>this.onClose()}>
                                 <i className="fa fa-arrow-up"></i>
                             </button>
                         </td>
                     }
-                    {!this.state.isOpen &&   
+                    {!this.state.slot.isOpen &&   
                         <td className="backgroundstart"><div className="btnstart">
                             <button className="btnround" onClick={e =>this.onOpen()}>
                                 <i className="fa fa-arrow-down"></i>
@@ -75,14 +75,40 @@ export class SlotView extends Component<{owner:EntityView,slot:Slot},{}>{
                             size={this.state.cardinalitySize} 
                             value= {this.state.slot.cardinality.value} />
                     </td>
+                {!this.state.slot.isOperationsOpen &&
                     <td className="backgroundend">
-                        <button className="btnround"><i className="fa fa-ellipsis-h"></i></button>
+                        <button className="btnround" onClick={e=>this.onSwitchOptions()}>
+                            <i className="fa fa-ellipsis-h"></i>
+                        </button>
                     </td>
+                }
+                {this.state.slot.isOperationsOpen && <>
+                    <td className="backgroundmiddle">
+                        <button className="btnround" onClick={e=>this.onSwitchOptions()}>
+                            <i className="fa fa-ellipsis-h"></i>
+                        </button>
+                    </td>
+                    <td className="backgroundmiddle"><div className="btnstart">
+                        <button className="btnround" onClick={e=>this.moveSlotUp()}>
+                            <i className="fa fa-arrow-up"></i>
+                        </button>
+                    </div></td>
+                    <td className="backgroundmiddle"><div className="btnmiddle">
+                        <button className="btnround" onClick={e=>this.moveSlotDown()}>
+                            <i className="fa fa-arrow-down"></i>
+                        </button>
+                    </div></td>
+                    <td className="backgroundend"><div className="btnend">
+                        <button className="btnround" onClick={e=>this.deleteSlot()}>
+                            <i className="fa fa-trash"></i>
+                        </button>
+                    </div></td>
+                </>}
                 </tr>
-                {this.state.isOpen &&            
-                    <tr>
+                {this.state.slot.isOpen &&            
+                    <tr className="spacer">
                         <td colSpan={4}>
-                            <table id="constrait">
+                            <table id="constrait"><tbody>
                                 <ConstraitView 
                                     constrait={this.state.slot.type} 
                                     owner={this}
@@ -91,10 +117,10 @@ export class SlotView extends Component<{owner:EntityView,slot:Slot},{}>{
                                     constrait={this.state.slot.cardinality} 
                                     owner={this}
                                 />
-                                {this.state.slot.customConstraits.map(constrait =>
-                                    <ConstraitView constrait={constrait} owner={this} />
+                                {this.state.slot.customConstraits.map((constrait,index) =>
+                                    <ConstraitView key="index" constrait={constrait} owner={this} />
                                 )}   
-                                <tr>
+                                <tr className="spacer">
                                     <td>
                                         <button 
                                             className="btnlong"
@@ -103,7 +129,7 @@ export class SlotView extends Component<{owner:EntityView,slot:Slot},{}>{
                                         </button>
                                     </td>
                                 </tr>
-                            </table>
+                            </tbody></table>
                         </td>
                     </tr>
                 }
@@ -111,12 +137,71 @@ export class SlotView extends Component<{owner:EntityView,slot:Slot},{}>{
         );
     }
 
+    deleteSlot(): void {
+        this.props.owner.deleteSlot(this.state.slot)
+    }
+
+    moveSlotUp(): void {
+        this.props.owner.moveSlotUp(this.state.slot)
+    }
+
+    moveSlotDown(): void {
+        this.props.owner.moveSlotDown(this.state.slot)
+    }
+
+    onSwitchOptions() {
+        let slot = this.state.slot
+        slot.isOperationsOpen = !slot.isOperationsOpen
+        this.props.owner.setSlot(slot)
+    }
+
+    deleteConstrait(constrait: Constrait) {
+        let slot = this.state.slot
+        let constraits = slot.customConstraits
+
+        constraits = constraits.filter(item=>item!=constrait)
+        slot.customConstraits=constraits
+        this.props.owner.setSlot(slot)
+    }
+
+    moveConstraitUp(constrait: Constrait) {
+        let slot = this.state.slot
+        let constraits = slot.customConstraits
+        let index = constraits.indexOf(constrait)
+
+        if(index!==0 && index!==-1){
+            let otherConstrait=constraits[index-1]
+            constraits[index-1]=constrait
+            constraits[index]=otherConstrait
+            slot.customConstraits=constraits
+
+            this.props.owner.setSlot(slot)
+        }
+    }
+
+    moveConstraitDown(constrait: Constrait) {
+        let slot = this.state.slot
+        let constraits = slot.customConstraits
+        let index = constraits.indexOf(constrait)
+        if(index!==constraits.length-1 && index!==-1){
+            let otherConstrait=constraits[index+1]
+            constraits[index+1]=constrait
+            constraits[index]=otherConstrait
+            slot.customConstraits=constraits
+            this.props.owner.setSlot(slot)  
+        }
+    }
+
     onOpen(){
-        this.setState({isOpen:true})
+        let slot = this.state.slot
+        slot.isOpen=true
+        this.props.owner.setSlot(slot)
     }
 
     onClose(){
-        this.setState({isOpen:false})
+        let slot = this.state.slot
+        slot.isOpen=false
+        this.props.owner.setSlot(slot)
     }
         
     typeChange(e){

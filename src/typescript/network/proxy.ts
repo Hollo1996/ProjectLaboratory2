@@ -18,7 +18,7 @@ class Proxy extends EventProducer<ProxyEventMap>
         this.token="";
         
         this.ws.addEventListener("message", (e) => {
-            let p = <IncomingPacket>JSON.parse(e);
+            let p = JSON.parse(e) as IncomingPacket;
             switch (p.type) {
                 case "error":
                     alert(p.message);

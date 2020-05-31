@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Login } from './ui/auth/login';
 import { proxy } from './network/proxy';
-import { Main } from './ui/old/main';
 import { ModelHandlerView } from './ui/handler/modelHandlerView';
 import { ModelView } from './ui/dmla/modelView';
 import { Model } from './model/data/dmla/Model';
